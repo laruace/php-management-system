@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>菜单信息</title>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/form.css">
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
+</head>
+<body>
+<div class="form-container">
+	<form action="" method="post">
+        <input type="hidden" name="id" value="" />        
+    	<p class="legend"><strong>注意:</strong>带*号的为必填字段.(<em>*</em>)</p>
+
+    	<fieldset>
+    		<legend>菜单信息</legend>
+
+            <div>
+                <label>菜单分类 <em>*</em></label>
+                <select name="top_menu" id="top_menu" <?php if ($this->menu){ echo "disabled='disabled'";}?> style="width:90px;">
+                    <option value="0"  >请选择</option>
+                <?php 
+                foreach ($this->menus as $menu)
+                {
+                ?>
+                    <option <?php if ($this->menu['top_id'] == $menu['menu_id']){ echo "selected='selected'";}?> value="<?php echo $menu['menu_id'];?>"  ><?php echo $menu['menu_name'];?></option>
+                <?php 
+                }
+                ?>
+                </select>
+                <select id="second_menu" name="second_menu" style="width:90px; <?php if ($this->menu['menu_level'] < 2){ echo "display:none;"; } ?>" <?php if ($this->menu){ echo "disabled='disabled'";}?>>
+                    <option value="0">请选择</option>
+                    <?php 
+                    foreach ($this->second_menus as $menu)
+                    {
+                    ?>
+                    <option <?php if ($menu['menu_id'] == $this->menu['parent_id']){ echo "selected='selected'"; }?> value="<?php echo $menu['menu_id'];?>"><?php echo $menu['menu_name'];?></option>
+                    <?php 
+                    }
+                    ?>
+                </select>
+                <input type="hidden" id="top_id" name="top_id" value="<?php echo $this->menu['top_id'];?>">
+                <input type="hidden" id="parent_id" name="parent_id" value="<?php echo $this->menu['parent_id'];?>">
+            </div>
+            <div>
+                <label>菜单名称 </label>
+                <input id="param" type="text" name="menu_name" value="<?php echo $this->menu['menu_name'];?>" />
+            </div>
+            
+            <div class="third_menu" <?php if ($this->menu['menu_level'] != 3){ echo 'style="display: none;"';}?>>
+                <label>Controller <em>*</em></label>
+                <input id="mkey" type="text" name="controller" value="<?php echo $this->menu['controller'];?>" />
+            </div>
+            
+            <div class="third_menu" <?php if ($this->menu['menu_level'] != 3){ echo 'style="display: none;"';}?>>
+                <label>Action <em>*</em></label>
+                <input id="name" type="text" name="action" value="<?php echo $this->menu['action'];?>" />
+            </div>
+            
+            <div class="third_menu" <?php if ($this->menu['menu_level'] != 3){ echo 'style="display: none;"';}?>>
+                <label>是否显示</label>
+                <input type="radio" <?php if (!$this->menu['is_show']){ echo "checked='checked'"; } ?> type="text" name="is_show" value="0" /> 否
+                <input type="radio" <?php if ($this->menu['is_show'] == 1){ echo "checked='checked'"; } ?> type="text" name="is_show" value="1" /> 是
+            </div>
+
+            <div>
+                <label>排序</label>
+                <input id="sort" type="text" name="sort" value="<?php echo $this->menu['sort'] | 255;?>" />
+            </div>
+
+    	</fieldset>
+
+    	<div class="buttonrow">
+    		<input type="submit" value="提交" class="button" />&nbsp;&nbsp;
+            <input type="button" value="取消" class="button" onclick="history.go(-1);" />
+    	</div>
+	</form>
+</div>
+<script type="text/javascript">
+var Menu = {
+    that : {},
+    init: function (){
+        that = this;
+        jQuery('#top_menu').change(function(e){
+            that.topMenuChange(this);
+        });
+        
+        jQuery('#second_menu').change(function(e){
+            that.secondMenuChange(this);
+        });
+    },
+    topMenuChange : function(e){
+        var menu_id = jQuery(e).val();
+        if (menu_id > 0)
+        {
+            jQuery('#top_id').val(menu_id);
+            jQuery('#parent_id').val(menu_id);
+            jQuery('#second_menu').show();
+            jQuery.ajax({
+                type: 'POST',
+                url: '/system/submenu' ,
+                data: {menu_id: menu_id} ,
+                success: function(data){
+                    if (data.err != 0)
+                    {
+                        return alert(data.message == null ? data.data : data.message);
+                    }
+                    var option_html = "<option value='0'>请选择</option>";
+                    if (data.err == 0 && data.data)
+                    {
+                        var menus = data.data;
+                        for (i in menus)
+                        {
+                            option_html += '<option value="'+menus[i].menu_id+'">'+menus[i].menu_name+'</option>';
+                        }
+                    }
+                    return jQuery('#second_menu').html(option_html).show();
+                } ,
+                dataType: 'json'
+            });
+            
+        } else
+        {
+            jQuery('#top_id').val(0);
+            jQuery('#parent_id').val(0);
+            jQuery('#second_menu').hide();
+        }
+    },
+    secondMenuChange : function(e){
+        var menu_id = jQuery(e).val();
+        jQuery('#parent_id').val(menu_id);
+        if (menu_id > 0)
+        {
+            that.showThirdMenuOption();
+        } else{
+            that.hideThirdMenuOption();
+        }
+    },
+    showThirdMenuOption: function()
+    {
+        jQuery('.third_menu').show();
+    },
+    hideThirdMenuOption: function(){
+        jQuery('.third_menu').hide();
+    }
+};
+jQuery(document).ready(function(){
+    Menu.init();
+});
+</script>
+</body>
+</html>
+ 

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加部门</title>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/form.css">
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
+</head>
+
+<body>
+
+<div class="form-container">
+	<form action="" method="POST">
+        <input type="hidden" name="department_id" value="<?php echo $this->department['department_id'];?>" />        
+    	<p class="legend"><strong>注意:</strong>带*号的为必填字段.(<em>*</em>)</p>
+    	<fieldset>
+    		<legend>部门信息</legend>
+            <div>
+                <label>部门名称 <em>*</em></label>
+                <input id="department_name" type="text" name="department_name" value="<?php echo $this->department['department_name'];?>" />
+            </div>
+            <div>
+                <label>排序 <em>*</em></label>
+                <input id="sort" type="text" name="sort" value="<?php echo $this->department['sort'] | 255;?>" />
+            </div>
+        </fieldset>
+
+            
+            <legend>管理组权限 <input name="privs_all" value="1" type="checkbox" id="privs_all" /> 所有权限</legend>            
+            
+            <?php 
+            foreach ($this->menus as $top_menu)
+            {
+            ?>
+                <fieldset style="border:1px solid #CCC;">
+                <legend>
+                    <?php echo $top_menu['menu_info']['menu_name'];?> &nbsp;
+                    <input type="checkbox" class="top_menu" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" /> 全选
+                </legend>
+                <?php 
+                    foreach ((array) $top_menu['sub_menus'] as $second_menu)
+                    {
+                ?>
+                        <fieldset class="controlset" style="border:1px dotted #DDD;">
+                        <legend class="label"><?php echo $second_menu['menu_info']['menu_name']; ?></legend>
+                        <?php 
+                        foreach ((array) $second_menu['sub_menus'] as $menu)
+                        {
+                        ?>
+                            <input name="menu_ids[]" class="top_menu_<?php echo $top_menu['menu_info']['menu_id'];?>" <?php if (isset($this->auth_options[$menu['menu_id']])){ echo "checked"; }?>  value="<?php echo $menu['menu_id'];?>" type="checkbox"  id="items_35" class="mod_<?php echo $top_menu['menu_id']; ?>" /><span><?php echo $menu['menu_name'];?></span>
+                        <?php 
+                        }
+                        ?>
+                         </fieldset>
+                <?php 
+                    }
+                ?>   
+                </fieldset>
+            <?php 
+            }
+            ?>
+    	<div class="buttonrow">
+    		<input type="submit" value="提交" class="button" />&nbsp;&nbsp;
+            <input type="button" value="取消" class="button" onclick="history.go(-1);" />
+    	</div>
+	</form>
+</div>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+    jQuery('#privs_all').click(function(){
+        jQuery('input[type="checkbox"]').attr('checked', this.checked);
+    });
+    
+    jQuery('.top_menu').click(function(){
+        var top_id = jQuery(this).attr('top_id');
+        jQuery('.top_menu_' + top_id).attr('checked', this.checked);
+    });
+});
+</script>
+</body>
+</html>
+ 

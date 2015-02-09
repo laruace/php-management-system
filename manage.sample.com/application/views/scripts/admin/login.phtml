@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业信息管理系统_用户登录</title>
+<style type="text/css">
+<!--
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #016aa9;
+	overflow:hidden;
+}
+.style1 {
+	color: #000000;
+	font-size: 12px;
+}
+-->
+</style>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
+</head>
+
+<body>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td><table width="962" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td height="235" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/login_03.gif">&nbsp;</td>
+      </tr>
+      <tr>
+        <td height="53">
+            
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="394" height="53" style="background: url(<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/login_05.gif) no-repeat bottom;">&nbsp;</td>
+            <td width="206" height="53" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/login_06.gif">
+                
+                <div style="margin:auto;width:206px;height:53px;position:relative;">
+                    <div style="position:absolute;left:0;top:-10px; width: 206px;">
+                        
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="30%" height="25"><div align="right"><span class="style1">用户</span></div></td>
+                            <td width="43%" height="25"><div align="center">
+                            <input type="text" id="username" name="username" style="width:135px; height:20px; background-color:#292929; border:solid 1px #7dbad7; font-size:12px; color:#6cd0ff">
+                            </div></td>
+                            <td width="27%" height="25">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td height="25"><div align="right"><span class="style1">密码</span></div></td>
+                            <td height="25"><div align="center">
+                            <input type="password" id="password" name="password" style="width:135px; height:20px; background-color:#292929; border:solid 1px #7dbad7; font-size:12px; color:#6cd0ff">
+                            </div></td>
+                            <td height="25">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr id="captcha_container" style="display:none;">
+                            <td height="25"><div align="right"><span class="style1">验证码</span></div></td>
+                            <td height="25">
+                            <div align="center" style="line-height: 25px; height: 25px;">
+                            <span><input type="text" id="captcha" name="captcha" maxlength="4" style="width:45px; height:20px; background-color:#292929; border:solid 1px #7dbad7; font-size:12px; color:#6cd0ff"></span>
+                            <span><img src='/admin/captcha' id="captcha_imag" width="80" height="20" style="vertical-align:middle; cursor: pointer;"/></span>
+                            </div></td>
+                            <td height="25">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="25"><div align="right"><span class="style1"></span></div></td>
+                            <td height="25">
+                                <div align="left"><input type="image" id="login" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/dl.gif" name="submit" /></div>
+                            </td>
+                            <td height="25">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        </table>
+                        
+                    </div>
+                </div>
+                
+
+                
+                
+            </td>
+            <td width="362" height="53" style='background:url(<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/login_07.gif) no-repeat;'>&nbsp;</td>
+          </tr>
+        </table>
+
+            
+        </td>
+      </tr>
+      <tr>
+        <td height="213" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/login_08.gif">&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('#captcha').val('');
+        jQuery('#login').click(function(){
+            login();
+        });
+        
+        jQuery(document).keypress(function(e){
+            if (e.which == 13)
+            {
+                login();
+            }
+        });
+    
+        jQuery('#captcha_imag').click(function(){
+            var captcha_url = '/admin/captcha?' + Math.random();
+            jQuery('#captcha').val('');
+            jQuery(this).attr('src', captcha_url);
+        });
+    });
+    function login()
+    {
+        var username = jQuery('#username').val();
+        var password = jQuery('#password').val();
+        var captcha = jQuery('#captcha').val();
+        jQuery.ajax({
+            'type': 'post',
+            'url': '/admin/login',
+            'dataType': 'json',
+            'data': {'username': username, 'password': password, 'captcha': captcha},
+            'success': function(msg){
+                
+                if (msg.err == 1 || msg.err == 2)
+                {
+                    jQuery('#password').val('');
+                }
+                
+                if (msg.err == 3)
+                {
+                    jQuery('#captcha_container').show();
+                }
+                
+                if (msg.err == 0)
+                {
+                    return location.href= '/admin';
+                } else{
+                    jQuery('#captcha_imag').trigger('click');
+                    return alert(msg.message);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

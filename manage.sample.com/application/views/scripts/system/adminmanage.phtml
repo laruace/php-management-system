@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/ui/jquery.ui.all.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/data.css">
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-ui-1.8.16.custom.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery.ui.datepicker-zh-CN.js"></script>
+<style type="text/css">
+.p5{padding:5px;}
+.p10{padding:10px;}
+
+td { line-height: 30px; }
+td a { text-decoration: none; color: #0000ee; }
+td span.left { float: left; padding-left: 5px; }
+td span.right { float: right; padding-right: 5px; }
+td span.right a { color: #000; }
+.link_03 a{text-decoration:none;}
+.link_03{overflow:hidden;margin-bottom:6px;}
+.link_03 ul{padding:0px; margin:0px;}
+.link_03 li{float:left; list-style:none; margin-right:6px; padding:0px 6px; line-height:18px; border:1px solid #A1A1A1}
+.link_03 li.cur{ background:#ddd}
+.link_03 li.cur a{color:#ff33ff;}
+.link_02 span {min-width: 28px;padding-left: 0px;display: inline-block;margin-left: 0px;}
+
+/*list select*/
+.optionSel{width:100%;margin:0px auto;margin-bottom:10px;background:#b5d6e6;}
+.optionSel td{padding:5px;}
+.optionSel select{border:1px solid #999;padding:3px;}
+.optionSel .input{border:1px solid #999;padding:3px;}
+</style>
+</head><body>
+<!--Table header {-->
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img width="12" height="30" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_03.gif"></td>
+    <td align="left" valign="middle" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_05.gif">
+    
+    <!--table header content {-->
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="50%" align="left"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tb.gif" width="16" height="16" border="0" align="absmiddle" /> 当前位置：后台管理员
+        <td width="50%" align="right"><a href="/system/addadmin">添加管理员</a></td>
+      </tr>
+    </table>
+    <!--} table header content-->
+    
+    </td>
+    <td width="16"><img width="16" height="30" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_07.gif"></td>
+  </tr>
+</table>
+<!--} Table header-->
+
+<!--Table content {-->
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="8" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_12.gif"></td>
+    <td style="padding:10px;">
+        <!--conten {-->
+<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="b5d6e6">
+          <tr align="center" bgcolor="#CDE9FC">
+            <th width="5%">用户编号</th>
+            <th width="15%">
+            <select name="group" id="group" onchange="document.location.href='/system/adminmanage?department_id=' + this.value;">
+            <option value="0">全部用户组</option>
+                <?php 
+                    foreach ($this->departments as $key => $value)
+                    {
+                ?>
+                        <option <?php if ($key == $_GET['department_id']){ echo "selected";}?> value="<?php echo $key;?>" ><?php echo $value; ?></option>
+                <?php 
+                    }
+                ?>
+                        </select>
+            </th>
+            <th width="15%">用户名称</th>
+            <th width="15%">真实姓名</th>
+            <th width="15%">最后登录</th>
+            <th>基本操作</th>
+          </tr>
+          <?php 
+          foreach ($this->admin_list as $admin)
+          {
+          ?>
+          <tr align="center" valign="middle" bgcolor="#FFFFFF" onMouseOver="this.bgColor='#eeeeee'" onMouseOut="this.bgColor='#FFFFFF'">
+            <td><?php echo $admin['admin_id'];?></td>
+            <td><?php echo $admin['department_name'];?></td>
+            <td><?php echo $admin['username'];?></td>
+            <td><?php echo $admin['admin_name'];?></td>
+            <td><?php echo date('Y-m-d H:i:s', $admin['last_login']);?></td>
+            <td>
+                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/edt.gif" width="16" height="16" />
+                <a href="/system/editadmin?admin_id=<?php echo $admin['admin_id'];?>">编辑</a>&nbsp; &nbsp;
+                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/del.gif" width="16" height="16" />
+                <a href="/system/deleteadmin?admin_id=<?php echo $admin['admin_id'];?>" onclick="return confirm('确认要删除吗？');">删除</a>
+            </td>
+          </tr>
+          <?php 
+          }
+          ?>
+                </table>        
+        <!--} content-->              
+    </td>
+    <td width="8" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_15.gif"></td>
+  </tr>
+</table>
+<!--} Table content-->
+
+<!--Table footer {-->
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="12"><img width="12" height="35" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_18.gif"></td>
+    <td align="left" valign="middle" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_19.gif">    
+        <!--content {-->
+            <div class="link_03" id="page">
+                <?php echo $this->page; ?>
+            </div>        
+        <!--} content-->
+    </td>
+    <td width="16"><img width="16" height="35" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_20.gif"></td>
+  </tr>
+</table>
+<!--} Table footer-->
+
+</body>
+</html>

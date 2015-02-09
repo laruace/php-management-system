@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>企业信息管理系统</title>
+<style type="text/css">
+<!--
+* { margin:0; padding:0;}
+html { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; padding:98px 0 6px 0; overflow:hidden;}
+html,body { height:100%;  color: #fff; }
+.header { position:relative; margin-top:-98px; height:98px; }
+.main { position:relative; overflow:auto; height:100%; min-height: 100px;}
+
+.user_info { float: left; font-size:12px; }
+.user_info a { color: #f0f; }
+.day_info { float: right; font-size: 12px; }
+
+.footer{
+    position: relative; margin-bottom: -6px; height: 6px;
+    width: 100%; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_61.gif');
+}
+.footer .f_left {
+    width: 6px; float:left; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_59.gif');
+}
+.footer .f_right {
+    width: 6px; float:right; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_62.gif');
+}
+
+ul, li { margin: 0px; padding: 0px; list-style-type: none; }
+
+#main_menu { height: 28px; font-size: 12px; color:#033d61; }
+#main_menu li { float: left; height: 28px; line-height: 28px; }
+#main_menu li.text { width: 65px; margin: 4px 0px; height:20px; line-height:20px; text-align:center; cursor: pointer; }
+#main_menu li.split {
+    width: 5px; margin: 0 3px;
+    background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_34.gif') no-repeat;
+}
+
+#main_menu li.hover {
+    background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/bg.gif');
+    border: 1px solid #a6d0e7;
+    width: 63px; margin: 3px 0px;
+}
+-->
+</style>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
+</head>
+
+<body>
+<div class="header">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+	    <td height="70" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_05.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	      <tr>
+	        <td height="24"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td width="270" height="24" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_03.gif">&nbsp;</td>
+	            <td width="505" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_04.gif">&nbsp;</td>
+	            <td>&nbsp;</td>
+	            <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_07.gif" width="21" height="24"></td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td height="38"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td width="270" height="38" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_09.gif">&nbsp;</td>
+	            <td>
+                    <div class="user_info">欢迎你，<?php echo $this->admin['admin_name'];?>，<a href="/admin/loginout">退出</a></div>
+                    <div class="day_info">今天是：<?php echo date('Y年m月d日', time());?></div>
+                </td>
+	            <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_11.gif" width="21" height="38"></td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	      <tr>
+	        <td height="8" style=" line-height:8px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <td width="270" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_29.gif" style=" line-height:8px;">&nbsp;</td>
+	            <td width="505" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_30.gif" style=" line-height:8px;">&nbsp;</td>
+	            <td style=" line-height:8px;">&nbsp;</td>
+	            <td width="21" style=" line-height:8px;"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_31.gif" width="21" height="8"></td>
+	          </tr>
+	        </table></td>
+	      </tr>
+	    </table></td>
+	  </tr>
+	  <tr>
+	    <td height="28" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_36.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+	      <tr>
+	        <td width="177" height="28" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_32.gif"></td>
+	        <td>
+                <ul id="main_menu">
+                <!--
+                    <li class="text">业务中心</li>
+                    <li class="split"></li>
+                -->
+                </ul>
+            </td>
+	        <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_37.gif" width="21" height="28"></td>
+	      </tr>
+	    </table></td>
+	  </tr>
+	</table>
+</div>
+
+<div class="main">
+	<iframe src="/admin/center" name="mainFrame" id="mainFrame" width="100%" height="99%" allowtransparency="yes" scrolling="no" frameborder="0"></iframe>
+</div>
+
+<div class="footer">
+    <div class="f_left"></div>
+    <div class="f_right"></div>
+</div>
+
+<script type="text/javascript">
+var menus = <?php echo $this->menus?>;
+var top_menus = <?php echo $this->top_menus;?>;
+var Menu = {
+    that: {},
+    main_iframe: {},
+    top_menus: {},
+    init: function(top_menus){
+        that = this;
+        this.main_iframe = this.getMainIframe();
+        this.top_menus = top_menus;
+        this.setTopMenu();
+        jQuery('#main_menu li.text').click(function(e){
+            e.preventDefault();
+            var menu_id = jQuery(this).attr('menu_id');
+            that.setSubMenu(menu_id);
+            $("#mainFrame")[0].contentWindow.init();
+            setTimeout(function(){ $("#mainFrame")[0].contentWindow.setDefaultFrame(); }, 200);
+            return false;
+        });
+        
+        $('#main_menu li.text').live('hover', function(e){
+            if (e.type == 'mouseenter')
+            {
+                $(this).addClass('hover'); 
+            } 
+            if (e.type == 'mouseleave')
+            {
+                $(this).removeClass('hover');
+            }
+        });
+        
+        setTimeout(function(){
+            jQuery('#main_menu li.text:first').trigger('click');
+        }, 500)
+    },
+    getMainIframe: function(){
+        return document.getElementById("mainFrame");
+    },
+    setTopMenu: function()
+    {
+        if (menus)
+        {
+            var top_menus = '';
+            for (i in this.top_menus)
+            {
+                var menu = this.top_menus[i];
+                var top_id = menu.menu_id;
+                if (menus[top_id] != undefined)
+                {
+                    top_menus += '<li class="text" menu_id="'+menu.menu_id+'">'+menu.menu_name+'</li><li class="split"></li>';
+                }
+            }
+            jQuery('#main_menu').html(top_menus);
+        }
+    }, 
+    setSubMenu:function(menu_id){
+        if (menus[menu_id] == undefined)
+        {
+            return ;
+        }
+        var menu = menus[menu_id].menu_info;
+        var sub_menu_title = menu.menu_name;
+        var sub_menu_html = '';
+        var sub_menus = menus[menu_id].sub_menus;
+        if (sub_menus != undefined)
+        {
+            var j = 0;
+            for (i in sub_menus)
+            {
+                var sub_menu_info = sub_menus[i].menu_info;
+                var third_menus = sub_menus[i].sub_menus;
+                if (third_menus == undefined)
+                {
+                    continue;
+                }
+                sub_menu_html += '<div class="menu_title" onclick="doListChange(this);">' + sub_menu_info.menu_name + '</div>';
+                sub_menu_html += '<ul class="menu_list" ' + (j > 0 ? ' style="display:none;"' : "") + ' >';
+                for (k in third_menus)
+                {
+                    var link =  '/' + third_menus[k].controller + '/' + third_menus[k].action;            
+                    sub_menu_html += '<li><a href="' + link + '">' +third_menus[k].menu_name + '</a></li>';
+                }
+                sub_menu_html += "</ul>";
+                j++;
+            }
+        }
+        this.setSubTitle(sub_menu_title);
+        this.renderSubMenu(sub_menu_html);
+    },
+    setSubTitle:function(title){
+        return this.main_iframe.contentWindow.document.getElementById("manage_title").innerHTML = title;
+    },
+    renderSubMenu:function(html)
+    {
+        return this.main_iframe.contentWindow.document.getElementById("sub_menu_bar").innerHTML = html;
+    }
+};
+jQuery(document).ready(function(){
+    Menu.init(top_menus);
+});
+
+</script>
+</body>
+</html>
