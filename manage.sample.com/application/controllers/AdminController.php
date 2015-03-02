@@ -135,9 +135,6 @@ class AdminController extends Star_Controller_Action
     {
         $admin_service = new AdminService();
         $admin_service->loginOut();
-        include_once 'pptv_auth/sso_cas.php';
-        $pptv_auth = new sso_cas();
-        $pptv_auth->logout();
     }
 }
 
