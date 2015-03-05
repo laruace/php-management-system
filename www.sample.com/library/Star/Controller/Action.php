@@ -275,7 +275,15 @@ class Star_Controller_Action implements Star_Controller_Action_Interface{
 		echo isset($_GET['cb'])  && !empty($_GET['cb']) ? htmlspecialchars($_GET['cb']) . '(' . json_encode($message) . ')' : json_encode($message);
 	}
     
-	/**
+    /**
+     * 显示404页面 
+     */
+    protected function show404()
+    {
+        $this->render('404', false);
+    }
+
+    /**
 	 * 设置不显示底层
 	 */
     protected function setNoRender()

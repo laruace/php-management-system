@@ -12,6 +12,7 @@
  * @package library\Star\Controller\Front
  * @author zhangqinyang
  */
+require 'Star/Controller/Action.php';
 class Star_Controller_Front{
 
     protected $display_exceptions = false; //默认不显示异常
@@ -339,9 +340,7 @@ class Star_Controller_Front{
             throw new Star_Exception("Connot load controller calss {$controller} from file {$file_path}", 500);
         }
         
-        require 'Star/Controller/Action.php';
         require $file_path;
-        
         //类是否存在
         if (!class_exists($controller, false))
         {
@@ -526,9 +525,11 @@ class Star_Controller_Front{
      */
     public function handleException($e)
     {
-        if ($e->getCode() == 404)
+        if ($e->getCode() == 404 && strtolower($this->request->getControllerName()) != 'error')
         {
-            return header('Location: /404.html');
+            $this->request->setControllerName('error')
+                          ->setActionName('index');
+            return $this->dispatch();
         }
 
         if ($this->getDisPlayExceptions() == true)
