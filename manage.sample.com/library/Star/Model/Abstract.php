@@ -221,17 +221,9 @@ abstract class Star_Model_Abstract
      * @param null $table
      * @return type 
      */
-	public function fetchCol($where, $conditions = '*' , $table = null)
+	public function fetchCol($where, $conditions = '*', $table = null, $order = null, $page = null, $page_size = null)
 	{
-		$rs = $this->getAdapter()->fetchAll($where, $conditions , $table);
-		$data = array();
-		if (!empty($rs) && is_array($rs))
-		{
-			foreach ($rs as $value)
-			{
-				$data[] = $value[$this->_primary];
-			}
-		}
+		$data = $this->getAdapter()->fetchCol($where, $conditions = '*', $table = null, $order = null, $page = null, $page_size = null);
 		return $data;
 	}
 	

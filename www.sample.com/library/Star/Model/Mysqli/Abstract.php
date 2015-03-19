@@ -235,7 +235,23 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	
 	public function fetchCol($where, $conditions = null , $table = null)
 	{
-		$data = $this->fetchAll($where, $conditions = null , $table = null);
+		$sql = '';
+        
+		if ($where instanceof Star_Model_Mysqli_Select)
+		{
+			$sql = $where->assemble();
+		} else
+        {
+            $sql = $this->getSql($where, $conditions, $table, $order, $page, $page_size);
+        }
+		
+		$result = $this->_query($sql);
+        $data = array();
+		
+		while ($rs = $result->fetch_row())
+		{
+			$data[] = $rs[0];
+		}
 		return $data;
 	}
     
