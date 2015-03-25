@@ -807,7 +807,7 @@ class AdminService {
      */
     protected function encryptionCaptcha($captcha, $time)
     {
-        $captcha = md5(md5($captcha . sha1('J(*f2')));
+        $captcha = md5(md5($captcha . sha1('J(*f2') . $time));
         return $captcha;
     }
 
