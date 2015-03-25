@@ -805,7 +805,7 @@ class AdminService {
      * @param type $captcha
      * @return type 
      */
-    protected function encryptionCaptcha($captcha)
+    protected function encryptionCaptcha($captcha, $time)
     {
         $captcha = md5(md5($captcha . sha1('J(*f2')));
         return $captcha;
@@ -816,11 +816,13 @@ class AdminService {
      */
     public function showCaptcha()
     {
+		$now = time();
         $captcha_obj = new Captcha();
         $captcha_obj->doImg();
         $captcha = $captcha_obj->getCode();
-        $capcha = $this->encryptionCaptcha($captcha);
-        Star_Cookie::set('captcha', $capcha, time() + 120);
+        $capcha = $this->encryptionCaptcha($captcha, $now);
+        Star_Cookie::set('captcha', $capcha, $now + 30);
+		Star_Cookie::set('ct', $now, $now + 30);
     }
     
     /**
@@ -831,7 +833,8 @@ class AdminService {
      */
     public function checkCaptcha($captcha)
     {
-        if ($this->encryptionCaptcha($captcha) == Star_Cookie::get('captcha'))
+		$captcha_time = Star_Cookie::get('ct');
+        if ($this->encryptionCaptcha($captcha, $captcha_time) == Star_Cookie::get('captcha') && time() - $captcha_time <20)
         {
             return true;
         } else {
