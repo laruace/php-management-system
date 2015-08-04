@@ -48,7 +48,7 @@ class AdminModel extends Star_Model_Abstract {
         $select->from($this->getTableName())->limitPage($page, $page_size);
         if (isset($params['admin_name']) && $params['admin_name'])
         {
-            $select->where('admin_name = "?"', $params['admin_name']);
+            $select->where('admin_name = ?', $params['admin_name']);
         }
         
         if (isset($params['department_id']) && $params['department_id'])
@@ -58,7 +58,7 @@ class AdminModel extends Star_Model_Abstract {
         
         if (isset($params['username']) && $params['username'])
         {
-            $select->where('username = "?"', $params['username']);
+            $select->where('username = ?', $params['username']);
         }
         return $this->fetchAll($select);
     }
@@ -75,7 +75,7 @@ class AdminModel extends Star_Model_Abstract {
         $select->from($this->getTableName(), 'count(1)');
         if (isset($params['admin_name']) && $params['admin_name'])
         {
-            $select->where('admin_name = "?"', $params['admin_name']);
+            $select->where('admin_name = ?', $params['admin_name']);
         }
         
         if (isset($params['department_id']) && $params['department_id'])
@@ -85,7 +85,7 @@ class AdminModel extends Star_Model_Abstract {
         
         if (isset($params['username']) && $params['username'])
         {
-            $select->where('username = "?"', $params['username']);
+            $select->where('username = ?', $params['username']);
         }
         return $this->fetchOne($select);
     }

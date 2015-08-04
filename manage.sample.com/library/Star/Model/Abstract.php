@@ -26,7 +26,7 @@ abstract class Star_Model_Abstract
 	
 	protected static $_default_db = null;
 	
-	protected $_support_db = array('mysqli', 'mysql');
+	protected $_support_db = array('mysqli' => 'Mysqli', 'mysql' => 'Mysql', 'pdo_mysql' => 'Pdo_Mysql');
 	
 	public function __construct($config = array())
 	{
@@ -150,6 +150,11 @@ abstract class Star_Model_Abstract
 		return $this->getDefaultAdapter()->delete($table, $where);
 	}
 	
+    /**
+     * 执行SQL
+     * @param type $sql
+     * @return type
+     */
 	public function query($sql)
 	{
         if ($this->getAdapter()->isSelect() == true)
@@ -272,16 +277,23 @@ abstract class Star_Model_Abstract
 		{
 			return null;
 		}
-
-		if (is_array($db) && in_array(strtolower($db['adapter']), $this->_support_db))
+        
+        $adapter = strtolower($db['adapter']);
+		if (array_key_exists($adapter, $this->_support_db))
 		{
-			$adapter = ucfirst($db['adapter']);
-            require_once "Star/Model/{$adapter}/Abstract.php";
+            $adapter = $this->_support_db[$adapter];
+            $adapter_path = str_replace('_', '/', $adapter);
+            require_once "Star/Model/{$adapter_path}/Abstract.php";
 			$adapter = 'Star_Model_' . $adapter . '_Abstract';
 			return new $adapter($db['params']);
 		}
 	}
 	
+    /**
+     * 设置适配器
+     * @param type $db
+     * @return $db
+     */
 	public function setAdapter($db)
 	{
 		if (empty($db) || !is_array($db))
@@ -292,6 +304,10 @@ abstract class Star_Model_Abstract
 		return self::$_db = self::setupAdapter($db);
 	}
 	
+    /**
+     * 返回适配器
+     * @return type
+     */
 	public function getAdapter()
 	{
         if (self::$_db == null)
@@ -302,6 +318,10 @@ abstract class Star_Model_Abstract
 		return self::$_db;
 	}
 	
+    /**
+     * 设置参数
+     * @param array $options
+     */
 	public function setOptions(Array $options)
 	{
 		foreach ($options as $key => $value)
@@ -320,6 +340,10 @@ abstract class Star_Model_Abstract
 		}
 	}
 	
+    /**
+     * 配置
+     * @param type $db
+     */
 	public static function setting($db)
 	{
         //表前缀
@@ -331,6 +355,10 @@ abstract class Star_Model_Abstract
 		self::$_config = $db;
 	}
 	
+    /**
+     * 返回默认适配器
+     * @return type
+     */
 	public function getDefaultAdapter()
 	{
         if (self::$_default_db == null)

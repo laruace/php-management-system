@@ -83,7 +83,7 @@ class Star_Loader {
     }
     
 	/**
-	 *�自动加载
+	 * 自动加载
 	 *
 	 * @param $class_name
 	 */

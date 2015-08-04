@@ -36,7 +36,7 @@ class AdminLoginModel extends Star_Model_Abstract {
         
         if (isset($params['username']) && $params['username'])
         {
-            $select->where('a.username = "?"', $params['username']);
+            $select->where('a.username = ?', $params['username']);
         }
         return $this->fetchAll($select);
     }
@@ -63,7 +63,7 @@ class AdminLoginModel extends Star_Model_Abstract {
         
         if (isset($params['username']) && $params['username'])
         {
-            $select->where('a.username = "?"', $params['username']);
+            $select->where('a.username = ?', $params['username']);
         }
         return $this->fetchOne($select);
     }

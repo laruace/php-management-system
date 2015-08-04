@@ -22,7 +22,7 @@ class SystemController extends Star_Controller_Action
         $department_list = $department_data['department_list'];
         $this->view->assign(array(
             'page' => $page,
-            'department_list' => $department_list
+            'department_list' => $department_list,
         ));
     }
     
@@ -46,7 +46,7 @@ class SystemController extends Star_Controller_Action
                 'sort' => (int) $request->getParam('sort'),
                 'is_show' => (int) $request->getParam('is_show'),
                 'add_time' => time(),
-                'update_time' => time()
+                'update_time' => time(),
             );
             $department_id = $admin_service->insertDepartment($department_data);
             if ($department_id)
@@ -62,7 +62,7 @@ class SystemController extends Star_Controller_Action
                             'department_id' => $department_id,
                             'admin_id' => 0,
                             'add_time' => time(),
-                            'update_time' => time()
+                            'update_time' => time(),
                         );
                         //添加权限
                         $admin_service->insertAuth($auth_data);
@@ -76,6 +76,7 @@ class SystemController extends Star_Controller_Action
         }
         $menus = $admin_service->getAllSortMenu();
         $this->view->assign('menus', $menus);
+        $this->view->assign('department', array());
         $this->render('department_info');
     }
     
@@ -122,7 +123,7 @@ class SystemController extends Star_Controller_Action
                             'department_id' => $department_id,
                             'admin_id' => 0,
                             'add_time' => time(),
-                            'update_time' => time()
+                            'update_time' => time(),
                         );
                         //添加权限
                         $admin_service->insertAuth($auth_data);
@@ -263,7 +264,7 @@ class SystemController extends Star_Controller_Action
                             'department_id' => 0,
                             'admin_id' => $admin_id,
                             'add_time' => time(),
-                            'update_time' => time()
+                            'update_time' => time(),
                         );
                         //添加权限
                         $admin_service->insertAuth($auth_data);
@@ -276,7 +277,8 @@ class SystemController extends Star_Controller_Action
         }
         $departments = $admin_service->getDepartmentOption();
         $this->view->assign(array(
-            'departments' => $departments
+            'departments' => $departments,
+            'admin' => array(),
         ));
         $this->render('admininfo');
     }
@@ -333,7 +335,7 @@ class SystemController extends Star_Controller_Action
                             'department_id' => 0,
                             'admin_id' => $admin_id,
                             'add_time' => time(),
-                            'update_time' => time()
+                            'update_time' => time(),
                         );
                         //添加权限
                         $admin_service->insertAuth($auth_data);
@@ -388,7 +390,7 @@ class SystemController extends Star_Controller_Action
         $page = (int) $request->getParam('page');
         $page_size = 20;
         $params = array(
-            'top_id' => (int) $request->getParam('top_id')
+            'top_id' => (int) $request->getParam('top_id'),
         );
         $admin_service = new AdminService();
         $menu_data = $admin_service->getMenuByPage($page, $page_size, $params);
@@ -407,7 +409,7 @@ class SystemController extends Star_Controller_Action
         $this->view->assign(array(
             'page' => $page_info,
             'menu_list' => $menu_list,
-            'top_menus' => $top_menus
+            'top_menus' => $top_menus,
         ));
     }
     
@@ -499,7 +501,7 @@ class SystemController extends Star_Controller_Action
                 'sort' => $sort,
                 'is_show' => $is_show,
                 'add_time' => time(),
-                'update_time' => time()
+                'update_time' => time(),
             );
             
             $menu_id = $admin_service->insertMenu($menu_data);
@@ -513,6 +515,7 @@ class SystemController extends Star_Controller_Action
         $menus = $admin_service->getTopMenu();
         $this->view->assign(array(
             'menus' => $menus,
+            'menu' => array(),
         ));
         $this->render('menuinfo');
     }
@@ -593,7 +596,7 @@ class SystemController extends Star_Controller_Action
                 'menu_name' => $menu_name,
                 'sort' => $sort,
                 'is_show' => $is_show,
-                'update_time' => time()
+                'update_time' => time(),
             );
 
             $rs = $admin_service->updateMenu($menu_id, $menu_data);
@@ -662,7 +665,7 @@ class SystemController extends Star_Controller_Action
         $params = array(
             'username' => $username,
             'start_time' => $start_time,
-            'end_time' => $end_time
+            'end_time' => $end_time,
         );
         $login_data = $admin_service->getLoginLogByPage($page, $page_size, $params);
         $this->view->assign(array(

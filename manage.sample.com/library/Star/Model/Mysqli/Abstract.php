@@ -39,7 +39,7 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
     
 	/**
 	 * 初始化
-	 * @param unknown $config
+	 * @param array $config
 	 */
     protected function init($config)
     {
@@ -58,7 +58,8 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 
     /**
      * 连接mysql数据库
-     * @see Star_Model_Interface::connect()
+     * @param type $db
+     * @throws Star_Exception
      */
     public function connect($db)
 	{
@@ -68,8 +69,8 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
         }
         
 		extract($db);
-
-		$this->db = new mysqli($host, $username, $password, $dbname);
+        !isset($port) && $port = 3306; 
+		$this->db = new mysqli($host, $username, $password, $dbname, $port);
 		
 		if ($this->db->connect_error)
 		{
@@ -88,9 +89,11 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	}
 	
 	/**
-	 * 插入数据
-	 * @param $data
-	 */
+     * 插入数据
+     * @param type $table
+     * @param array $data
+     * @return int 插入数据的自增ID
+     */
 	public function insert($table, Array $data)
 	{
 		$columns = array_keys($data); //表字段
@@ -101,12 +104,14 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 		return $this->db->insert_id;
 	}
 	
-	/**
-	 * 更新数据
-	 *
-	 * @param $where
-	 * @param $data
-	 */
+    /**
+     * 更新数据
+     * @param type $table
+     * @param type $where
+     * @param array $data
+     * @param type $quote_indentifier
+     * @return int 影响行数
+     */
 	public function update($table, $where, Array $data, $quote_indentifier = true)
 	{
 		
@@ -123,7 +128,9 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	
 	/**
 	 * 删除数据
+     * @param $table
 	 * @param $where
+     * @return int 影响行数
 	 */
 	public function delete($table, $where)
 	{
@@ -163,9 +170,15 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 
 
     /**
-	 * 返回结果集
-	 * @param $select
-	 */
+     * 返回结果集
+     * @param Star_Model_Mysqli_Select $where
+     * @param type $conditions
+     * @param type $table
+     * @param type $order
+     * @param type $page
+     * @param type $page_size
+     * @return array $data
+     */
 	public function fetchAll($where, $conditions = null, $table = null, $order = null, $page = null, $page_size = null)
 	{
         $sql = '';
@@ -191,9 +204,13 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	}
 	
 	/**
-	 * 返回结果
-	 * @param $id
-	 */
+     * 返回结果集第一个字段
+     * @param Star_Model_Mysqli_Select $where
+     * @param type $conditions
+     * @param type $table
+     * @param type $order
+     * @return type
+     */
 	public function fetchOne($where, $conditions = null, $table = null, $order = null)
 	{
         $sql = '';
@@ -213,9 +230,12 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	}
 	
 	/**
-	 * 返回一行结果集
-	 * @param $select
-	 */
+     * 返回一行结果集
+     * @param Star_Model_Mysqli_Select $where
+     * @param type $conditions
+     * @param type $table
+     * @return array $result
+     */
 	public function fetchRow($where, $conditions = null , $table = null)
 	{
 		if ($where instanceof Star_Model_Mysqli_Select)
@@ -233,6 +253,13 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 		return $data;
 	}
 	
+    /**
+     * 返回第一个查询字段集合
+     * @param Star_Model_Mysqli_Select $where
+     * @param type $conditions
+     * @param type $table
+     * @return array
+     */
 	public function fetchCol($where, $conditions = null , $table = null)
 	{
 		$sql = '';
@@ -255,6 +282,11 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 		return $data;
 	}
     
+    /**
+     * 执行sql
+     * @param type $sql
+     * @return result
+     */
     public function query($sql)
     {
         $result = $this->_query($sql);
@@ -276,6 +308,7 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
      * 判断是否是查询sql
      * 
      * @param type $sql 
+     * return bool是否是查询语句
      */
     public function isSelect($sql)
     {
@@ -292,6 +325,7 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 
     /**
 	 * 返回影响行数
+     * @return int affected_rows
 	 */
 	public function rowCount()
 	{
@@ -301,6 +335,7 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	/**
 	 * sql query
 	 * @param $sql
+     * @return $resource
 	 */
 	public function _query($sql)
 	{
@@ -332,11 +367,18 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
         return $resource;
 	}
     
+    /**
+     * 返回select对象
+     * @return \Star_Model_Mysqli_Select
+     */
     public function select()
 	{
 		return new Star_Model_Mysqli_Select();
 	}
 	
+    /**
+     * 关闭数据连接
+     */
 	public function close()
 	{
 		return $this->db->close();
@@ -347,6 +389,7 @@ class Star_Model_Mysqli_Abstract implements Star_Model_Interface
 	 *
 	 * @param $identifier
 	 * @param $auto_quote
+     * return $identifier
 	 */
 	public function quoteIdentifier($identifier, $auto_quote = false)
 	{

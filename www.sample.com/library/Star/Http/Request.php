@@ -24,6 +24,13 @@ class Star_Http_Request extends Star_Http_Abstract
      */
     public function __construct()
 	{
+        //添加支持application/json请求数据
+        if ($this->getMethod() == 'POST' && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false)
+        {
+            $request_body = @file_get_contents('php://input');
+            $_POST = json_decode($request_body, true);
+        }
+
 		$this->params = array_merge($_POST, $_GET);
 	}
 	

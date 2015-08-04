@@ -15,7 +15,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 require 'Star/Application.php';
-require 'Page.php'; 
 
 // Create application, bootstrap, and run
 $application = new Star_Application(

@@ -102,7 +102,7 @@ class Star_Model_Mysqli_Select implements Star_Model_Select_Interface
 		if($value !== null)
 		{
 			$value      =  is_array($value) ? implode(',', $value) : $this->disposeQuote($value);
-			$conditions =  str_replace('?', $value, $conditions);
+			$conditions =  str_replace('?', '"' . $value . '"', $conditions);
 		}
 		$this->_where[] = !count($this->_where) ? $conditions :  $where_type . ' ' . $conditions;
 	}

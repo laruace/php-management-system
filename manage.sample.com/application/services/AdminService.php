@@ -246,7 +246,7 @@ class AdminService {
     {
         $ip = Star_Http_Request::getIp();
         $http_agent = Star_Http_Request::getHttpAgent();
-        $tmpArr = array($admin_id, $username, $department_id, $timestamp, $ip, $http_agent, $this->token, $auth_token);
+        $tmpArr = array($admin_id, $username, $department_id, $timestamp, $ip, $http_agent, $this->token, $auth_token,);
         sort($tmpArr, SORT_STRING);
         $signature = md5(sha1(implode('', $tmpArr)));
         return $signature;
@@ -397,10 +397,10 @@ class AdminService {
     public function getDepartmentByPage($page, $page_size, Array $params)
     {
         $total = $this->department_model->getDepartmentCount($params);
-        $page = Page::setPage($page, $page_size, $total);
+        $page = Star_Page::setPage($page, $page_size, $total);
         $page_info = array('page' => $page, 'page_size' => $page_size, 'total' => $total);
         $department_list = $this->department_model->getDepartmentByPage($page, $page_size, $params);
-        $page_data = Page::show($page_info);
+        $page_data = Star_Page::show($page_info);
         return array('page' => $page_data, 'total' => $total, 'department_list' => $department_list);
     }
     
@@ -487,9 +487,9 @@ class AdminService {
     public function getAdminByPage($page, $page_size, Array $params)
     {
         $total = $this->admin_model->getAdminCount($page, $page_size, $params);
-        $page = Page::setPage($page, $page_size, $total);
+        $page = Star_Page::setPage($page, $page_size, $total);
         $page_info = compact('total', 'page', 'page_size');
-        $page_data = Page::show($page_info);
+        $page_data = Star_Page::show($page_info);
         $admin_list = $this->admin_model->getAdminByPage($page, $page_size, $params);
         return array('page' => $page_data, 'total' => $total, 'admin_list' => $admin_list);
     }
@@ -546,10 +546,10 @@ class AdminService {
     public function getMenuByPage($page, $page_size, Array $params)
     {
         $total = $this->admin_menu_model->getMenuCount($params);
-        $page = Page::setPage($page, $page_size, $total);
+        $page = Star_Page::setPage($page, $page_size, $total);
         $menu_list = $this->admin_menu_model->getMenuByPage($page, $page_size, $params);
         $page_info = compact('page', 'page_size', 'total');
-        $page_data = Page::show($page_info);
+        $page_data = Star_Page::show($page_info);
         return array('page' => $page_data, 'total' => $total, 'menu_list' => $menu_list);
     }
     
@@ -854,9 +854,9 @@ class AdminService {
     {
         $admin_login_model = new AdminLoginModel();
         $total = $admin_login_model->getLoginLogCount($params);
-        $page = Page::setPage($page, $page_size, $total);
+        $page = Star_Page::setPage($page, $page_size, $total);
         $page_info = array('total' => $total, 'page' => $page, 'page_size' => $page_size);
-        $page = Page::show($page_info);
+        $page = Star_Page::show($page_info);
         $login_logs = $admin_login_model->getLoginLogByPage($page, $page_size, $params);
         return array('page' => $page, 'total' => $total, 'login_logs' => $login_logs);
     }

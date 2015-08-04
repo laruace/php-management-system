@@ -4,6 +4,11 @@
  */
 
 /**
+ * 导入文件
+ */
+require 'Star/Cache/Interface.php';
+
+/**
  * Redis 缓存类
  * 
  * @package library\Star\Application\Cache

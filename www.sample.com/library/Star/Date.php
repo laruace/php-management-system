@@ -106,7 +106,7 @@ class Star_Date {
         {
             $time += 7 * 86400 - 1;
         }
-       return $time;
+        return $time;
     }
     
     /**

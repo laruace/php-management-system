@@ -478,7 +478,7 @@ class Star_Controller_Front{
                     $count = count($path);
                     for ($i =0; $i<$count; $i = $i+2)
                     {
-                        $params[$path[$i]] = $path[$i+1];
+                        $params[$path[$i]] = isset($path[$i+1]) ? $path[$i+1] : '';
                     }
                 }
                 $params = $value + $params;

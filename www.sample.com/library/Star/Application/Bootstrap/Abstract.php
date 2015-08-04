@@ -96,12 +96,15 @@ abstract class Star_Application_Bootstrap_Abstract
             }
             
 			$this->class_resources = array();
+            
 			foreach ($methods as $method)
 			{
 				if (strpos($method, '_init') === 0)
 				{
 					$this->class_resources[] = $method;
-				}
+				}else{
+                    break;
+                }
 			}
 		}
 		
