@@ -181,6 +181,7 @@ class SystemController extends Star_Controller_Action
         $page_size = 20;
         $params = array(
             'department_id' => (int) $request->getParam('department_id'),
+            'admin_name' => Star_String::escape($request->getParam('admin_name')),
         );
         $admin_service = new AdminService();
         $admin_data = $admin_service->getAdminByPage($page, $page_size, $params);
@@ -198,6 +199,7 @@ class SystemController extends Star_Controller_Action
             }
         }
         
+        $this->view->assign($params);
         $this->view->assign(array(
             'admin_list' => $admin_list,
             'page' => $page,
@@ -391,6 +393,7 @@ class SystemController extends Star_Controller_Action
         $page_size = 20;
         $params = array(
             'top_id' => (int) $request->getParam('top_id'),
+            'menu_name' => Star_String::escape($request->getParam('menu_name')),
         );
         $admin_service = new AdminService();
         $menu_data = $admin_service->getMenuByPage($page, $page_size, $params);
@@ -406,6 +409,7 @@ class SystemController extends Star_Controller_Action
                 $menu['first_menu_name'] = $first_menu_name;
             }
         }
+        $this->view->assign($params);
         $this->view->assign(array(
             'page' => $page_info,
             'menu_list' => $menu_list,

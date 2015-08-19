@@ -1,74 +1,127 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>添加部门</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/form.css">
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
-</head>
+<div class="row">
+    <form action="" method="post" class="form-horizontal" id="block-validate" novalidate="novalidate">
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-edit"></i>
+          </div>
+          <h5>部门信息</h5>
 
-<body>
-
-<div class="form-container">
-	<form action="" method="POST">
-        <input type="hidden" name="department_id" value="<?php echo $this->department['department_id'];?>" />        
-    	<p class="legend"><strong>注意:</strong>带*号的为必填字段.(<em>*</em>)</p>
-    	<fieldset>
-    		<legend>部门信息</legend>
-            <div>
-                <label>部门名称 <em>*</em></label>
-                <input id="department_name" type="text" name="department_name" value="<?php echo $this->department['department_name'];?>" />
+          <!-- .toolbar -->
+          <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                <i class="fa fa-minus"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                <i class="fa fa-expand"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                <i class="fa fa-times"></i>
+              </a> 
+            </nav>
+          </div><!-- /.toolbar -->
+        </header>
+        <div id="collapseOne" class="body collapse in" aria-expanded="true">
+            <div class="form-group">
+              <label class="control-label col-lg-4">部门名称</label>
+              <div class="col-lg-4">
+                <input type="text" id="department_name" name="department_name" <?php if ($this->department['department_name']){ echo 'readonly';}?> value="<?php echo $this->department['department_name'];?>" class="form-control">
+              </div>
             </div>
-            <div>
-                <label>排序 <em>*</em></label>
-                <input id="sort" type="text" name="sort" value="<?php echo $this->department['sort'] | 255;?>" />
+            <div class="form-group">
+              <label class="control-label col-lg-4">排序</label>
+              <div class="col-lg-4">
+                <input type="text" id="sort" name="sort" value="<?php echo $this->department['sort'];?>" class="form-control">
+              </div>
             </div>
-        </fieldset>
+        </div>
+      </div>
+    </div><!-- /.col-lg-12 -->
 
-            
-            <legend>管理组权限 <input name="privs_all" value="1" type="checkbox" id="privs_all" /> 所有权限</legend>            
-            
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-check"></i>
+          </div>
+          <h5>
+              权限管理<input type="checkbox" id="privs_all" class="uniform top_menu">
+                    
+          </h5>
+        </header>
+        <div class="body form-horizontal">
             <?php 
             foreach ($this->menus as $top_menu)
             {
             ?>
-                <fieldset style="border:1px solid #CCC;">
-                <legend>
-                    <?php echo $top_menu['menu_info']['menu_name'];?> &nbsp;
-                    <input type="checkbox" class="top_menu" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" /> 全选
-                </legend>
-                <?php 
+            <div class="col-lg-12">
+                <div class="box">
+                  <header>
+                    <div class="icons">
+                      <i class="fa fa-check"></i>
+                    </div>
+                    <h5><?php echo $top_menu['menu_info']['menu_name'];?>
+                        <input type="checkbox" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" class="uniform top_menu">
+                    </h5>
+                    <div class="toolbar">
+                      <div class="checker">
+                          <span class="checked"></span>
+                      </div>
+                    </div>
+                  </header>
+                    <?php 
                     foreach ((array) $top_menu['sub_menus'] as $second_menu)
                     {
-                ?>
-                        <fieldset class="controlset" style="border:1px dotted #DDD;">
-                        <legend class="label"><?php echo $second_menu['menu_info']['menu_name']; ?></legend>
+                    ?>
+                    <div class="form-group">
+                      <label class="control-label col-lg-2"><?php echo $second_menu['menu_info']['menu_name']; ?></label>
+                      <div class="col-lg-10">
                         <?php 
                         foreach ((array) $second_menu['sub_menus'] as $menu)
                         {
                         ?>
-                            <input name="menu_ids[]" class="top_menu_<?php echo $top_menu['menu_info']['menu_id'];?>" <?php if (isset($this->auth_options[$menu['menu_id']])){ echo "checked"; }?>  value="<?php echo $menu['menu_id'];?>" type="checkbox"  id="items_35" class="mod_<?php echo $top_menu['menu_id']; ?>" /><span><?php echo $menu['menu_name'];?></span>
+                        <div class="checkbox pull-left">
+                          <label>
+                            <div class="checker">
+                                <span class="checked">
+                                    <input type="checkbox" name="menu_ids[]" <?php if (isset($this->auth_options[$menu['menu_id']])){ echo "checked='checked'";}?> value="<?php echo $menu['menu_id'];?>" class='top_menu_<?php echo $top_menu['menu_info']['menu_id']; ?> menu' class="uniform">
+                                </span>
+                            </div> 
+                            <?php echo $menu['menu_name'];?>
+                          </label>
+                        </div>
                         <?php 
                         }
                         ?>
-                         </fieldset>
-                <?php 
+                      </div>
+                    </div><!-- /.row -->
+                    <?php 
                     }
-                ?>   
-                </fieldset>
+                    ?>
+                </div>
+            </div>
             <?php 
             }
             ?>
-    	<div class="buttonrow">
-    		<input type="submit" value="提交" class="button" />&nbsp;&nbsp;
-            <input type="button" value="取消" class="button" onclick="history.go(-1);" />
-    	</div>
-	</form>
+            <div style="clear:both;height: 1px;">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions no-margin-bottom text-center form-group">
+        <input type="submit" value="提交" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="返回" onclick="history.go(-1);" class="btn btn-default">
+    </div>
+</form>
 </div>
+
+
 <script type="text/javascript">
 jQuery(document).ready(function(){
     jQuery('#privs_all').click(function(){
-        jQuery('input[type="checkbox"]').attr('checked', this.checked);
+        jQuery('.menu').attr('checked', this.checked);
     });
     
     jQuery('.top_menu').click(function(){
@@ -77,6 +130,3 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-</body>
-</html>
- 

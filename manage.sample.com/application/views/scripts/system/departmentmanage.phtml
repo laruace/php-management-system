@@ -1,112 +1,86 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
-<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/ui/jquery.ui.all.css">
-<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/data.css">
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-ui-1.8.16.custom.min.js"></script>
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery.ui.datepicker-zh-CN.js"></script>
-<style type="text/css">
-.p5{padding:5px;}
-.p10{padding:10px;}
-
-td { line-height: 30px; }
-td a { text-decoration: none; color: #0000ee; }
-td span.left { float: left; padding-left: 5px; }
-td span.right { float: right; padding-right: 5px; }
-td span.right a { color: #000; }
-.link_03 a{text-decoration:none;}
-.link_03{overflow:hidden;margin-bottom:6px;}
-.link_03 ul{padding:0px; margin:0px;}
-.link_03 li{float:left; list-style:none; margin-right:6px; padding:0px 6px; line-height:18px; border:1px solid #A1A1A1}
-.link_03 li.cur{ background:#ddd}
-.link_03 li.cur a{color:#ff33ff;}
-.link_02 span {min-width: 28px;padding-left: 0px;display: inline-block;margin-left: 0px;}
-
-/*list select*/
-.optionSel{width:100%;margin:0px auto;margin-bottom:10px;background:#b5d6e6;}
-.optionSel td{padding:5px;}
-.optionSel select{border:1px solid #999;padding:3px;}
-.optionSel .input{border:1px solid #999;padding:3px;}
-</style>
-</head><body>
-<!--Table header {-->
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="12"><img width="12" height="30" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_03.gif"></td>
-    <td align="left" valign="middle" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_05.gif">
-    
-    <!--table header content {-->
-    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-      <tr>
-        <td width="50%" align="left"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tb.gif" width="16" height="16" border="0" align="absmiddle" /> 当前位置：<a href="?g=system&m=group">管理组列表</a></td>
-        <td width="50%" align="right"><a href="/system/adddepartment">添加部门</a></td>
-      </tr>
-    </table>
-    <!--} table header content-->
-    
-    </td>
-    <td width="16"><img width="16" height="30" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_07.gif"></td>
-  </tr>
-</table>
-<!--} Table header-->
-
-<!--Table content {-->
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="8" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_12.gif"></td>
-    <td style="padding:10px;">
-        <!--content {-->
-<table width="100%" border="0" cellpadding="5" cellspacing="1" bgcolor="b5d6e6">
-          <tr align="center" bgcolor="#CDE9FC">
-              <th width="25%">部门ID</th>
-              <th width="25%">部门名称</th>
-              <th width="25%">排序</th>
-              <th width="25%">操作</th>
-          </tr>
-          <?php 
-          foreach ($this->department_list as $department)
-          {
-          ?>
-          <tr align="center" valign="middle" bgcolor="#FFFFFF" onMouseOver="this.bgColor='#eeeeee'" onMouseOut="this.bgColor='#FFFFFF'">
-            <td><?php echo $department['department_id'];?></td>
-            <td><?php echo $department['department_name'];?></td>
-            <td><?php echo $department['sort'];?></td>
-            <td>
-                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/edt.gif" width="16" height="16" />
-                <a href="/system/editdepartment/?department_id=<?php echo $department['department_id'];?>">编辑</a>&nbsp; &nbsp;
-                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/del.gif" width="16" height="16" />
-                <a href="/system/deletedepartment/?department_id=<?php echo $department['department_id'];?>" onclick="return confirm('确认要删除吗？');">删除</a>
-            </td>
-          </tr>
-          <?php 
-          }
-          ?>
-         </table>        
-        <!--} content-->              
-    </td>
-    <td width="8" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_15.gif"></td>
-  </tr>
-</table>
-<!--} Table content-->
-
-<!--Table footer {-->
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-  <tr>
-    <td width="12"><img width="12" height="35" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_18.gif"></td>
-    <td align="left" valign="middle" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_19.gif">    
-        <!--content {-->
-        <div class="link_03" id="page">
-                <?php echo $this->page;?>
+<!--Begin Datatables-->
+<div class="row">
+  <div class="col-lg-12 col-xs-12">
+    <div class="box">
+      <header>
+        <div class="icons">
+          <i class="fa fa-table"></i>
         </div>
-        <!--} content-->
-    </td>
-    <td width="16"><img width="16" height="35" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/tab_20.gif"></td>
-  </tr>
-</table>
-<!--} Table footer-->
+        <h5>部门管理</h5>
+        <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a class="btn btn-primary btn-sm btn-flat" href="/system/adddepartment" data-original-title="" title="">
+                  添加部门
+              </a>
+            </nav>
+          </div>
+      </header>
+      <div class="body" id="collapse4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <thead>
+                          <tr role="row">
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 80px;" aria-sort="ascending" >
+                                  部门ID
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  部门名称
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                 排序
+                              </th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">
+                                  操作
+                              </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                        foreach ($this->department_list as $department)
+                        {
+                        ?>
+                        <tr role="row" class="odd">
+                            <td><?php echo $department['department_id'];?></td>
+                            <td><?php echo $department['department_name'];?></td>
+                            <td><?php echo $department['sort'];?></td>
+                            <td>
+                                <a href="/system/editdepartment?department_id=<?php echo $department['department_id'];?>">
+                                   <i class="glyphicon glyphicon-edit"></i>编辑
+                                </a>
+                                <a href="/admin/deletdepartment?department_id=<?php echo $department['department_id'];?>">
+                                  <i class="glyphicon glyphicon-remove"></i>删除
+                                </a>
+                            </td>
+                        </tr>
+                        <?php 
+                        }
+                        ?>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="dataTables_info hidden" id="dataTable_info" role="status" aria-live="polite">
+                            Showing 1 to 25 of 57 entries
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                            <ul class="pagination">
+                                <li>
+                                    <?php echo $this->page;?>
+                                </li>
 
-</body>
-</html>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+<!--End Datatables-->

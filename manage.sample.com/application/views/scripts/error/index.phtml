@@ -1,0 +1,38 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo $this->title;?></title>
+    <meta name="msapplication-TileColor" content="#5bc0de" />
+    <meta name="msapplication-TileImage" content="assets/img/metis-tile.png" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/main.min.css">
+
+    <!--[if lt IE 9]>
+      <script src="assets/lib/html5shiv/html5shiv.js"></script>
+      <script src="assets/lib/respond/respond.min.js"></script>
+      <![endif]-->
+
+    <!--Modernizr-->
+
+  </head>
+  <body class="error">
+    <div class="container">
+
+      <div class="col-lg-8 col-lg-offset-2 text-center">
+        <div class="logo">
+          <h1><?php echo $this->code;?></h1>
+        </div>
+        <p class="lead text-muted"><?php echo $this->message;?></p>
+        <div class="clearfix"></div>
+      </div><!-- /.col-lg-8 col-offset-2 -->
+    </div>
+  </body>
+</html>

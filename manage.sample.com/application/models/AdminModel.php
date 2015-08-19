@@ -19,7 +19,7 @@ class AdminModel extends Star_Model_Abstract {
     public function getAdminByUsername($username)
     {
         $select = $this->select();
-        $select->from($this->getTableName())->where('username = "?"', $username);
+        $select->from($this->getTableName())->where('username = ?', $username);
         return $this->fetchRow($select);
     }
     

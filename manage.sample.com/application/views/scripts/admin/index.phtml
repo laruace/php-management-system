@@ -1,117 +1,250 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>企业信息管理系统</title>
-<style type="text/css">
-<!--
-* { margin:0; padding:0;}
-html { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; padding:98px 0 6px 0; overflow:hidden;}
-html,body { height:100%;  color: #fff; }
-.header { position:relative; margin-top:-98px; height:98px; }
-.main { position:relative; overflow:auto; height:100%; min-height: 100px;}
+<!doctype html>
+<html class="js no-touch localstorage svg">
+  <head>
+    <meta charset="UTF-8">
+    <title>Star Framewordk后台管理</title>
 
-.user_info { float: left; font-size:12px; }
-.user_info a { color: #f0f; }
-.day_info { float: right; font-size: 12px; }
+    <!--IE Compatibility modes-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-.footer{
-    position: relative; margin-bottom: -6px; height: 6px;
-    width: 100%; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_61.gif');
-}
-.footer .f_left {
-    width: 6px; float:left; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_59.gif');
-}
-.footer .f_right {
-    width: 6px; float:right; background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_62.gif');
-}
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/font-awesome/css/font-awesome.min.css">
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/main.min.css">
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/fullcalendar/fullcalendar.min.css">
 
-ul, li { margin: 0px; padding: 0px; list-style-type: none; }
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-#main_menu { height: 28px; font-size: 12px; color:#033d61; }
-#main_menu li { float: left; height: 28px; line-height: 28px; }
-#main_menu li.text { width: 65px; margin: 4px 0px; height:20px; line-height:20px; text-align:center; cursor: pointer; }
-#main_menu li.split {
-    width: 5px; margin: 0 3px;
-    background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_34.gif') no-repeat;
-}
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
-#main_menu li.hover {
-    background: url('<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/bg.gif');
-    border: 1px solid #a6d0e7;
-    width: 63px; margin: 3px 0px;
-}
--->
-</style>
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
-</head>
+    <!--[if lt IE 9]>
+      <script src="assets/lib/html5shiv/html5shiv.js"></script>
+      <script src="assets/lib/respond/respond.min.js"></script>
+      <![endif]-->
 
-<body>
-<div class="header">
-	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	  <tr>
-	    <td height="70" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_05.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	      <tr>
-	        <td height="24"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td width="270" height="24" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_03.gif">&nbsp;</td>
-	            <td width="505" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_04.gif">&nbsp;</td>
-	            <td>&nbsp;</td>
-	            <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_07.gif" width="21" height="24"></td>
-	          </tr>
-	        </table></td>
-	      </tr>
-	      <tr>
-	        <td height="38"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td width="270" height="38" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_09.gif">&nbsp;</td>
-	            <td>
-                    <div class="user_info">欢迎你，<?php echo $this->admin['admin_name'];?>，<a href="/admin/loginout">退出</a></div>
-                    <div class="day_info">今天是：<?php echo date('Y年m月d日', time());?></div>
-                </td>
-	            <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_11.gif" width="21" height="38"></td>
-	          </tr>
-	        </table></td>
-	      </tr>
-	      <tr>
-	        <td height="8" style=" line-height:8px;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	          <tr>
-	            <td width="270" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_29.gif" style=" line-height:8px;">&nbsp;</td>
-	            <td width="505" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_30.gif" style=" line-height:8px;">&nbsp;</td>
-	            <td style=" line-height:8px;">&nbsp;</td>
-	            <td width="21" style=" line-height:8px;"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_31.gif" width="21" height="8"></td>
-	          </tr>
-	        </table></td>
-	      </tr>
-	    </table></td>
-	  </tr>
-	  <tr>
-	    <td height="28" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_36.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-	      <tr>
-	        <td width="177" height="28" background="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_32.gif"></td>
-	        <td>
-                <ul id="main_menu">
-                <!--
-                    <li class="text">业务中心</li>
-                    <li class="split"></li>
-                -->
-                </ul>
-            </td>
-	        <td width="21"><img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/images/main_37.gif" width="21" height="28"></td>
-	      </tr>
-	    </table></td>
-	  </tr>
-	</table>
-</div>
+    <!--For Development Only. Not required -->
+    <script>
+    less = {
+        env: "development",
+        relativeUrls: false,
+        rootpath: "<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/"
+    };
+    Config = {
+        'static_path': "<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/"
+    };
+    </script>
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/style-switcher.css">
+    <link rel="stylesheet/less" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/theme.min.css">
+ </head>
+  <body class="menu-affix" style="padding-top: 54px;">
+    <div class="bg-dark dk" id="wrap">
+      <div id="top">
+        <!-- .navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="header">
+          <div class="container-fluid">
 
-<div class="main">
-	<iframe src="/admin/center" name="mainFrame" id="mainFrame" width="100%" height="99%" allowtransparency="yes" scrolling="no" frameborder="0"></iframe>
-</div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <header class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span> 
+                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span> 
+                <span class="icon-bar"></span> 
+              </button>
+              <a href="javascript:void(0);" class="navbar-brand">
+                <img src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/logo.png" alt="">
+              </a> 
+            </header>
+            <div class="topnav">
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default btn-sm" id="toggleFullScreen">
+                  <i class="glyphicon glyphicon-fullscreen"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="E-mail" data-toggle="tooltip" class="btn btn-default btn-sm">
+                  <i class="fa fa-envelope"></i>
+                  <span class="label label-warning">5</span> 
+                </a> 
+                <a data-placement="bottom" data-original-title="Messages" href="#" data-toggle="tooltip" class="btn btn-default btn-sm">
+                  <i class="fa fa-comments"></i>
+                  <span class="label label-danger">4</span> 
+                </a> 
+                <a data-toggle="modal" data-original-title="Help" data-placement="bottom" class="btn btn-default btn-sm" href="#helpModal">
+                  <i class="fa fa-question"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a href="/admin/loginout" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-metis-1 btn-sm">
+                  <i class="fa fa-power-off"></i>
+                </a> 
+              </div>
+              <div class="btn-group">
+                <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                  <i class="fa fa-bars"></i>
+                </a> 
+                <a data-placement="bottom" data-original-title="Show / Hide Right" data-toggle="tooltip" class="btn btn-default btn-sm toggle-right"> <span class="glyphicon glyphicon-comment"></span>  </a> 
+              </div>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
 
-<div class="footer">
-    <div class="f_left"></div>
-    <div class="f_right"></div>
-</div>
+              <!-- .nav -->
+              <ul class="nav navbar-nav" id="top_menu">
+              </ul><!-- /.nav -->
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav><!-- /.navbar -->
+        <header class="head hidden">
+          <div class="search-bar">
+            <form class="main-search" action="">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Live Search ...">
+                <span class="input-group-btn">
+            <button class="btn btn-primary btn-sm text-muted" type="button">
+                <i class="fa fa-search"></i>
+            </button>
+        </span> 
+              </div>
+            </form><!-- /.main-search -->
+          </div><!-- /.search-bar -->
+          <div class="main-bar">
+            <h3>
+              <i class="fa fa-building"></i>&nbsp; Boxed and Fixed Header &amp; Nav</h3>
+          </div><!-- /.main-bar -->
+        </header><!-- /.head -->
+      </div><!-- /#top -->
+      <div id="left">
+        <div class="media user-media bg-dark dker" id="user-media">
+          <div class="user-media-toggleHover">
+            <span class="fa fa-user"></span> 
+          </div>
+          <div class="user-wrapper bg-dark">
+            <a class="user-link" href="">
+              <img class="media-object img-thumbnail user-img" alt="User Picture" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/img/user.gif">
+              <span class="label label-danger user-label hidden">16</span> 
+            </a> 
+            <div class="media-body">
+              <h5 class="media-heading">Archie</h5>
+              <ul class="list-unstyled user-info">
+                <li> <a href="javascript://"><?php echo $this->admin['username'];?></a>  </li>
+                <li>Last Access :
+                  <br>
+                  <small>
+                    <i class="fa fa-calendar"></i>&nbsp;<?php echo date('Y-m-d H:i:s', $this->admin['last_login']);?></small> 
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- #menu -->
+        <ul id="menu" class="bg-blue dker">
+        </ul><!-- /#menu -->
+      </div><!-- /#left -->
+      <div id="content">
+        <div class="outer">
+          <div class="inner bg-light lter">
+            <iframe src="/admin/welcome" name="mainFrame" id="mainFrame" width="100%" height="100%" allowtransparency="yes" border="0" frameborder="0"></iframe>
+          </div><!-- /.inner -->
+        </div><!-- /.outer -->
+      </div><!-- /#content -->
+      <div id="right" class="bg-light lter">
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>Warning!</strong>  Best check yo self, you're not looking too good.
+        </div>
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <ul class="list-unstyled">
+            <li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span> </li>
+            <li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span> </li>
+            <li>Popularity <span class="dynamicbar pull-right">Loading..</span> </li>
+            <li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span> </li>
+          </ul>
+        </div><!-- /.well well-small -->
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <button class="btn btn-block">Default</button>
+          <button class="btn btn-primary btn-block">Primary</button>
+          <button class="btn btn-info btn-block">Info</button>
+          <button class="btn btn-success btn-block">Success</button>
+          <button class="btn btn-danger btn-block">Danger</button>
+          <button class="btn btn-warning btn-block">Warning</button>
+          <button class="btn btn-inverse btn-block">Inverse</button>
+          <button class="btn btn-metis-1 btn-block">btn-metis-1</button>
+          <button class="btn btn-metis-2 btn-block">btn-metis-2</button>
+          <button class="btn btn-metis-3 btn-block">btn-metis-3</button>
+          <button class="btn btn-metis-4 btn-block">btn-metis-4</button>
+          <button class="btn btn-metis-5 btn-block">btn-metis-5</button>
+          <button class="btn btn-metis-6 btn-block">btn-metis-6</button>
+        </div><!-- /.well well-small -->
+
+        <!-- .well well-small -->
+        <div class="well well-small dark">
+          <span>Default</span> <span class="pull-right"><small>20%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+          </div>
+          <span>Success</span> <span class="pull-right"><small>40%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+          </div>
+          <span>warning</span> <span class="pull-right"><small>60%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+          </div>
+          <span>Danger</span> <span class="pull-right"><small>80%</small> </span> 
+          <div class="progress xs">
+            <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+          </div>
+        </div>
+      </div><!-- /#right -->
+    </div><!-- /#wrap -->
+    <footer class="Footer bg-dark dker" id="footer">
+      <p>2015 &copy; StarFramework Admin</p>
+    </footer><!-- /#footer -->
+
+    <!-- #helpModal -->
+    <div id="helpModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+              in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --><!-- /#helpModal -->
+
+    <!--jQuery -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/jquery/jquery.min.js"></script>
+    <script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/less.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/js/bootstrap.min.js"></script>
+    <!-- MetisMenu -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.js"></script>
+    <!-- Screenfull -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/screenfull/screenfull.min.js"></script>
+    <!-- Metis core scripts -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/core.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/style-switcher.min.js"></script>
+  </body>
 
 <script type="text/javascript">
 var menus = <?php echo $this->menus?>;
@@ -120,34 +253,35 @@ var Menu = {
     that: {},
     main_iframe: {},
     top_menus: {},
+    menu_obj:"",
     init: function(top_menus){
         that = this;
+        this.menu_obj = jQuery('#menu');
         this.main_iframe = this.getMainIframe();
         this.top_menus = top_menus;
         this.setTopMenu();
-        jQuery('#main_menu li.text').click(function(e){
+        jQuery('#top_menu li').click(function(e){
             e.preventDefault();
             var menu_id = jQuery(this).attr('menu_id');
             that.setSubMenu(menu_id);
-            $("#mainFrame")[0].contentWindow.init();
-            setTimeout(function(){ $("#mainFrame")[0].contentWindow.setDefaultFrame(); }, 200);
             return false;
         });
         
-        $('#main_menu li.text').live('hover', function(e){
-            if (e.type == 'mouseenter')
-            {
-                $(this).addClass('hover'); 
-            } 
-            if (e.type == 'mouseleave')
-            {
-                $(this).removeClass('hover');
-            }
+        this.menu_obj.on('click', '.sub_menu', function(){
+            var menu_scroll_timeout = setTimeout(function(){
+                that.setMenuScroll();
+                clearTimeout(menu_scroll_timeout);
+            }, 200)
+                
         });
         
-        setTimeout(function(){
-            jQuery('#main_menu li.text:first').trigger('click');
-        }, 500)
+        this.menu_obj.hover(function(){
+            that.setMenuScroll();
+        }, function(){
+            that.clearMenuScroll();
+        });
+        jQuery('#top_menu li:first').trigger('click');
+        
     },
     getMainIframe: function(){
         return document.getElementById("mainFrame");
@@ -163,10 +297,10 @@ var Menu = {
                 var top_id = menu.menu_id;
                 if (menus[top_id] != undefined)
                 {
-                    top_menus += '<li class="text" menu_id="'+menu.menu_id+'">'+menu.menu_name+'</li><li class="split"></li>';
+                    top_menus += '<li menu_id="'+menu.menu_id+'"><a href="javascript:void(0);">'+menu.menu_name+'</a></li>';
                 }
             }
-            jQuery('#main_menu').html(top_menus);
+            jQuery('#top_menu').html(top_menus);
         }
     }, 
     setSubMenu:function(menu_id){
@@ -189,32 +323,75 @@ var Menu = {
                 {
                     continue;
                 }
-                sub_menu_html += '<div class="menu_title" onclick="doListChange(this);">' + sub_menu_info.menu_name + '</div>';
-                sub_menu_html += '<ul class="menu_list" ' + (j > 0 ? ' style="display:none;"' : "") + ' >';
+                sub_menu_html += '<li class=""><a href="javascript:;" class="sub_menu"><i class="fa fa-tasks"></i><span class="link-title">' + sub_menu_info.menu_name + '</span> <span class="fa arrow"></span></a> <ul class="collapse">';
                 for (k in third_menus)
                 {
                     var link =  '/' + third_menus[k].controller + '/' + third_menus[k].action;            
-                    sub_menu_html += '<li><a href="' + link + '">' +third_menus[k].menu_name + '</a></li>';
+                    sub_menu_html += '<li><a href="'+link+'" target="mainFrame"><i class="fa fa-angle-right"></i>&nbsp; '+third_menus[k].menu_name+'</a></li>';
                 }
                 sub_menu_html += "</ul>";
                 j++;
             }
         }
-        this.setSubTitle(sub_menu_title);
         this.renderSubMenu(sub_menu_html);
-    },
-    setSubTitle:function(title){
-        return this.main_iframe.contentWindow.document.getElementById("manage_title").innerHTML = title;
+        this.clickFirstSubMenu();
     },
     renderSubMenu:function(html)
     {
-        return this.main_iframe.contentWindow.document.getElementById("sub_menu_bar").innerHTML = html;
+        return this.menu_obj.html(html);
+    },
+    clickFirstSubMenu:function(){
+        var first_menu_item = setTimeout(function(){
+            that.menu_obj.children('li').find('.sub_menu').trigger('click');
+            clearTimeout(first_menu_item);
+        }, 100);
+    },
+    setMenuScroll: function(){
+        var menu_height = this.menu_obj.height();
+        var menu_items_height = 0;
+        this.menu_obj.children('li').each(function() {
+            menu_items_height = menu_items_height + jQuery(this).height();
+        });
+        
+        if (menu_items_height > menu_height)
+        {
+            this.menu_obj.css({'overflow-x': 'hidden', 'overflow-y': 'scroll'});
+        } else{
+            that.clearMenuScroll();
+        }
+    },
+    clearMenuScroll: function(){
+        this.menu_obj.css({'overflow-x': 'hidden', 'overflow-y': 'hidden'});
     }
+};
+
+var ContentAutoHeight = {
+    init: function(){
+        this.setContentHeight();
+    },
+    setContentHeight : function() {
+        jQuery('#content').height(this.getWindowHeight() - this.getHeaderHeight() - this.getFooterHeight());
+    },
+    getWindowHeight : function() {
+        return jQuery(window).height();
+    },
+    getHeaderHeight : function() {
+        return jQuery('#header').height();
+    },
+    getFooterHeight : function(){
+        return jQuery('#footer').height();
+    }
+
 };
 jQuery(document).ready(function(){
     Menu.init(top_menus);
+    ContentAutoHeight.init();
+    
+    jQuery(window).resize(function(){
+        ContentAutoHeight.setContentHeight();
+        Metis.init();
+    });
 });
 
 </script>
-</body>
 </html>

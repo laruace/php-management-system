@@ -51,6 +51,11 @@ class AdminMenuModel extends Star_Model_Abstract {
             $select->where('top_id = ?', (int) $params['top_id']);
         }
         
+        if (isset($params['menu_name']) && $params['menu_name'])
+        {
+            $select->where('menu_name = ?', $params['menu_name']);
+        }
+        
         if (isset($params['is_show']))
         {
             $select->where('is_show = ?', (int) $params['is_show']);
@@ -71,6 +76,11 @@ class AdminMenuModel extends Star_Model_Abstract {
         if (isset($params['top_id']) && $params['top_id'])
         {
             $select->where('top_id = ?', (int) $params['top_id']);
+        }
+        
+        if (isset($params['menu_name']) && $params['menu_name'])
+        {
+            $select->where('menu_name = ?', $params['menu_name']);
         }
         
         if (isset($params['is_show']))

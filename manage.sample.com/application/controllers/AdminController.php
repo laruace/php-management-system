@@ -4,7 +4,7 @@ class AdminController extends Star_Controller_Action
 {
     public function init()
 	{
-		
+		$this->disableLayout();
 	}
     
     /**
@@ -23,45 +23,43 @@ class AdminController extends Star_Controller_Action
         
         if ($request->isPost())
         {
-            $username = $request->getParam('username');
+            $username = trim($request->getParam('username'));
             $password = $request->getParam('password');
             $captcha = $request->getParam('captcha');
+            $remember = $request->getParam('remember');
             
             if (empty($username))
             {
-                return $this->showJson(5, '请输入用户名');
+                return $this->showJson(1, '请输入用户名');
             }
             
             if (empty($password) || strlen($password) < 6)
             {
-                return $this->showJson(6, '请输入6位以上密码');
+                return $this->showJson(2, '请输入6位以上密码');
             }
-            
+
+            if ($admin_service->checkCaptcha($captcha) == false)
+            {
+                return $this->showJson(3, '帐号或密码有误，请重新输入');
+            }
+                
             $admin = $admin_service->getAdminByUsername($username);
             
             if (empty($admin))
             {
-                return $this->showJson(1, '账号不存在，或者密码错误');
+                return $this->showJson(403, '帐号或密码有误，请重新输入');
             }
             
-            //当天密码错误超过5次，需要输入验证码
-            if (Star_Date::getDate() == $admin['error_date'] && $admin['error_times'] > 5)
+            //当天密码错误超过500次
+            if ($admin['error_times'] > 500)
             {
-                if (empty($captcha))
-                {
-                    return $this->showJson(3, '请输入验证码');
-                }
-                
-                if ($admin_service->checkCaptcha($captcha) == false)
-                {
-                    return $this->showJson(4, '验证码错误');
-                }
+                return $this->showJson(4, '帐号密码输入错误次数过多，请明日再试。');
             }
             
             //验证密码是否正确
             if ($admin['password'] == Password::Encryption($username, $password))
             {
-                $admin_service->adminLogin($username);
+                $admin_service->adminLogin($username, '', $remember);
             }  else {
                 $admin_data = array();
                 if (Star_Date::getDate() == $admin['error_date'])
@@ -78,7 +76,7 @@ class AdminController extends Star_Controller_Action
                 }
                 
                 $admin_service->updateAdmin($admin['admin_id'], $admin_data, false);
-                return $this->showJson(2, '账号不存在，或密码错误');
+                return $this->showJson(403, '帐号或密码有误，请重新输入');
             }
             return $this->showJson(0, '登录成功');
         }
@@ -106,10 +104,10 @@ class AdminController extends Star_Controller_Action
 	
     public function captchaAction()
     {
-        Star_Http_Response::setBrownerCache(10);
         $this->setNoRender();
         $admin_service = new AdminService();
-        $admin_service->showCaptcha();
+        $captcha = $admin_service->getCaptcha();
+        return $this->showJson(0, array('captcha' => $captcha));
     }
     
     /**
@@ -117,7 +115,7 @@ class AdminController extends Star_Controller_Action
      */
 	public function centerAction()
 	{
-		  
+		  $this->render('welcome');
 	}
     
     /**
@@ -135,6 +133,7 @@ class AdminController extends Star_Controller_Action
     {
         $admin_service = new AdminService();
         $admin_service->loginOut();
+        $this->redirect('/admin/login');
     }
 }
 

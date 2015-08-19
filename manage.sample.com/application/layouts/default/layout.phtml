@@ -1,25 +1,68 @@
-<html>
-<head>
-<title><?php echo $this->title;?></title>
-</head>
-<body>
-aaaaaaaaaaaaaaa
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
 
+    <!--Mobile first-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/font-awesome/css/font-awesome.min.css">
+    <!-- Metis core stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/main.min.css">
+    <!-- metisMenu stylesheet -->
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/table.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/datetimepicker.css">
+    <link rel="stylesheet" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/bootstrap-datepicker.min.css">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 
-
-
-<?php echo $this->layout->content;?>
-
-
-
-
-bbbbbbbbbbbb
-
-
-cccccccccccccc
+    <!--[if lt IE 9]>
+      <script src="assets/lib/html5shiv/html5shiv.js"></script>
+      <script src="assets/lib/respond/respond.min.js"></script>
+      <![endif]-->
+    <?php 
+        echo $this->loadCss();
+    ?>
+    <!--jQuery -->
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/jquery/jquery.min.js"></script>
+ </head>
+ <body style="margin:0 auto; padding: 0px;">
+ <div class="dk" id="wrap" style="margin:0px;padding-left: 10px; padding-right: 10px; overflow: hidden;">
+<?php 
+    echo $this->layout->content;
+?>
 <?php 
     echo $this->loadJs();
 ?>
+</div>
 </body>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/less.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/js/bootstrap.min.js"></script>
+<!-- MetisMenu -->
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/metisMenu/metisMenu.min.js"></script>
+<!-- Screenfull -->
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/screenfull/screenfull.min.js"></script>
+<!-- Metis core scripts -->
+<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/core.min.js"></script>
+<script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/moment/moment.min.js"></script>
+<script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/bootstrap-datepicker.min.js"></script>
+<script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.search').click(function(){
+            jQuery(this).parents('form').submit(); 
+        });
+        jQuery(".date").datepicker({
+            format: "yyyy-mm-dd"
+        });
+    });
+</script>
 </html>

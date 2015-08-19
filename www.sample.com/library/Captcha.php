@@ -28,11 +28,12 @@ class Captcha {
     }  
 
     //生成随机码  
-    private function createCode() {  
+    public function createCode() {  
         $_len = strlen($this->charset)-1;  
         for ($i=0;$i<$this->codelen;$i++) {  
             $this->code .= $this->charset[mt_rand(0,$_len)];  
         }  
+        return $this->code;
     }  
     
     //生成背景  
@@ -83,7 +84,7 @@ class Captcha {
     
     //获取验证码  
     public function getCode() {  
-        return strtolower($this->code);  
+        return $this->code;  
     }  
 }
 ?>

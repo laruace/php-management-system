@@ -527,6 +527,7 @@ class Star_Controller_Front{
     {
         if ($e->getCode() == 404 && strtolower($this->request->getControllerName()) != 'error')
         {
+            $this->view->code = 404;
             $this->request->setControllerName('error')
                           ->setActionName('index');
             return $this->dispatch();
@@ -541,7 +542,10 @@ class Star_Controller_Front{
         
         if ($e->getCode() == 500)
         {
-            //
+            $this->view->code = 500;
+            $this->request->setControllerName('error')
+                          ->setActionName('index');
+            return $this->dispatch();
         }
     }
 }

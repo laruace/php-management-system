@@ -7,6 +7,8 @@
  */
 class AdminService {
     
+    CONST CAPTCHA_TIMEOUT = 600;
+    
     protected $admin_model;
     
     protected $department_model;
@@ -14,10 +16,12 @@ class AdminService {
     protected $admin_menu_model;
     
     protected $auth_model;
+
+    protected $token = '0d0092b17bee7884134858f6e6ba68cf'; //管理员登陆验签串
     
-    protected $token = '^(*f3&@@6<.gs'; //管理员登陆验签串
+    protected $auth_token = '3862d8552919eaafa6e84c4af2afa5b6'; //权限验签串
     
-    protected $auth_token = 'AJklvjq2falk*#'; //权限验签串
+    protected $captcha_token = '1798cd647fed815a8a6dde78dee47589'; //验证码token
 
     /**
      * 构造函数 
@@ -29,7 +33,7 @@ class AdminService {
         $this->auth_model = new AuthModel();
     }
     
-    public function adminLogin($username, $admin_name = '')
+    public function adminLogin($username, $admin_name = '', $remember = false)
     {
         $admin_info = $this->admin_model->getAdminByUsername($username);
         $auth_list = array();
@@ -104,8 +108,8 @@ class AdminService {
             'auth_token' => $auth_token,
             'admin_name' => $admin_info['admin_name'],
         );
-        $this->setLoginInfo($admin_data); //设置用户登录信息
-        Star_Cookie::set('auth', base64_encode(json_encode($auth_list)), 0, '/', '', false, true); //设置用户权限信息
+        $this->setLoginInfo($admin_data, $remember); //设置用户登录信息
+        Star_Cookie::set('auth', base64_encode(json_encode($auth_list)), time() + 86400 * 30, '/', '', false, true); //设置用户权限信息
     }
     
     /**
@@ -168,10 +172,15 @@ class AdminService {
      * 
      * @param type $admin_data 
      */
-    public function setLoginInfo($admin_data)
+    public function setLoginInfo($admin_data, $remember)
     {
+        $expried_time = 0;
+        if ($remember == true)
+        {
+            $expried_time = time() + 86400 * 30;
+        }
         $admin_data = base64_encode(json_encode($admin_data));
-        Star_Cookie::set('admin', $admin_data, 0, '/', '', false, true);
+        Star_Cookie::set('admin', $admin_data, $expried_time, '/', '', false, true);
     }
 
 
@@ -807,22 +816,24 @@ class AdminService {
      */
     protected function encryptionCaptcha($captcha, $time)
     {
-        $captcha = md5(md5($captcha . sha1('J(*f2') . $time));
+        $captcha = strtolower($captcha);
+        $captcha = md5(md5($captcha . sha1($this->captcha_token) . $time));
         return $captcha;
     }
 
     /**
-     * 显示验证码 
+     * 获取验证码 
      */
-    public function showCaptcha()
+    public function getCaptcha()
     {
 		$now = time();
         $captcha_obj = new Captcha();
-        $captcha_obj->doImg();
-        $captcha = $captcha_obj->getCode();
-        $capcha = $this->encryptionCaptcha($captcha, $now);
-        Star_Cookie::set('captcha', $capcha, $now + 30);
-		Star_Cookie::set('ct', $now, $now + 30);
+        //$captcha_obj->doImg();
+        $captcha = $captcha_obj->createCode();
+        $captcha_encode = $this->encryptionCaptcha($captcha, $now);
+        Star_Cookie::set('captcha', $captcha_encode, $now + self::CAPTCHA_TIMEOUT);
+		Star_Cookie::set('ct', $now, $now + self::CAPTCHA_TIMEOUT);
+        return $captcha;
     }
     
     /**
@@ -834,7 +845,7 @@ class AdminService {
     public function checkCaptcha($captcha)
     {
 		$captcha_time = Star_Cookie::get('ct');
-        if ($this->encryptionCaptcha($captcha, $captcha_time) == Star_Cookie::get('captcha') && time() - $captcha_time <20)
+        if ($this->encryptionCaptcha($captcha, $captcha_time) == Star_Cookie::get('captcha') && time() - $captcha_time < self::CAPTCHA_TIMEOUT)
         {
             return true;
         } else {
@@ -856,9 +867,9 @@ class AdminService {
         $total = $admin_login_model->getLoginLogCount($params);
         $page = Star_Page::setPage($page, $page_size, $total);
         $page_info = array('total' => $total, 'page' => $page, 'page_size' => $page_size);
-        $page = Star_Page::show($page_info);
+        $page_data = Star_Page::show($page_info);
         $login_logs = $admin_login_model->getLoginLogByPage($page, $page_size, $params);
-        return array('page' => $page, 'total' => $total, 'login_logs' => $login_logs);
+        return array('page' => $page_data, 'total' => $total, 'login_logs' => $login_logs);
     }
 }
 

@@ -47,6 +47,7 @@ class AuthModel extends Star_Model_Abstract {
         $select = $this->select();
         $select->from($this->getTableName() . ' AS a')
                ->where('department_id = ?', (int) $department_id)
+               ->where('admin_id = 0')
                ->joinInner($this->getTableName('admin_menu') . ' AS m', 'a.menu_id = m.menu_id', array('menu_name', 'controller', 'action', 'is_show', 'parent_id', 'top_id', 'menu_level', 'sort'));
         return $this->fetchAll($select);
     }

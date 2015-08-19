@@ -214,10 +214,10 @@ class Star_Page
 	{
 		if (self::$instance->tag == true)
 		{
-			$link = "<span>" . self::$instance->tag_head . $page_name . self::$instance->tag_foot . "</span>";
+			$link = "<span ". (is_numeric($page_name) ? '' : "class='disabled'") .">" . self::$instance->tag_head . $page_name . self::$instance->tag_foot . "</span>";
 		} else
 		{
-			$link = "<span>" . $page_name . "</span>";
+			$link = "<span ". (is_numeric($page_name) ? '' : "class='disabled'") .">" . $page_name . "</span>";
 		}
 		return $link;
 	}
@@ -228,7 +228,7 @@ class Star_Page
 	 */
 	private function withoutTag($page_name)
 	{
-		$link = "<a href='" . self::$instance->link . "'>". $page_name ."</a>";
+		$link = "<a href='" . self::$instance->link . "' page=? >". $page_name ."</a>";
 		return $link;
 	}
 	
@@ -249,7 +249,7 @@ class Star_Page
 	 */
 	private function innerTag($page_name)
 	{
-		$link = "<a href='" . self::$instance->link . "'>". self::$instance->tag_head . $page_name . self::$instance->tag_foot ."</a>";
+		$link = "<a href='" . self::$instance->link . "' page=? >". self::$instance->tag_head . $page_name . self::$instance->tag_foot ."</a>";
 		return $link;
 	}
 	

@@ -1,95 +1,152 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>管理员信息</title>
-<link rel="stylesheet" type="text/css" href="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/css/form.css">
-<script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/jquery-1.6.4.min.js"></script>
-</head>
+<div class="row">
+    <form action="" method="post" class="form-horizontal" id="block-validate" novalidate="novalidate">
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-edit"></i>
+          </div>
+          <h5>管理员信息</h5>
 
-<body>
-
-<div class="form-container">
-	<form action="" method="post">
-        <input type="hidden" name="uid" value="83" />        
-    	<p class="legend"><strong>注意:</strong>带*号的为必填字段.(<em>*</em>)</p>
-    	<fieldset>
-    		<legend>管理员信息</legend>
-            <div>
-                <label>用户名 <em>*</em></label>
-                <input id="username" type="text" name="username" <?php if ($this->admin['username']){ echo "readonly='readonly'"; }?> value="<?php echo $this->admin['username'];?>"  />
+          <!-- .toolbar -->
+          <div class="toolbar">
+            <nav style="padding: 8px;">
+              <a href="javascript:;" class="btn btn-default btn-xs collapse-box">
+                <i class="fa fa-minus"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-default btn-xs full-box">
+                <i class="fa fa-expand"></i>
+              </a> 
+              <a href="javascript:;" class="btn btn-danger btn-xs close-box">
+                <i class="fa fa-times"></i>
+              </a> 
+            </nav>
+          </div><!-- /.toolbar -->
+        </header>
+        <div id="collapseOne" class="body collapse in" aria-expanded="true">
+            <div class="form-group">
+              <label class="control-label col-lg-4">用户名</label>
+              <div class="col-lg-4">
+                <input type="text" id="username" name="username" <?php if ($this->admin['username']){ echo 'readonly';}?> value="<?php echo $this->admin['username'];?>" class="form-control">
+              </div>
             </div>
-            
-            <div>
-                <label>密码 <em>*</em></label>
-                <input id="password" type="password" name="password" value="" />
-                修改时 为空则不修改，添加时 必须填写
+            <div class="form-group">
+              <label class="control-label col-lg-4">密码</label>
+              <div class="col-lg-4">
+                <input type="password" id="password" name="password" class="form-control">
+              </div>
             </div>
-            
-            <div>
-                <label>正式姓名 <em>*</em></label>
-                <input id="realname" type="text" name="admin_name" value="<?php echo $this->admin['admin_name'];?>" />
+            <div class="form-group">
+              <label class="control-label col-lg-4">姓名</label>
+              <div class="col-lg-4">
+                <input type="text" id="admin_name" name="admin_name" value="<?php echo $this->admin['admin_name'];?>" class="form-control">
+              </div>
             </div>
-            
-            <div>
-                <label>用户组 <em>*</em></label>
-                <select id="deparment_id" name="department_id" style="width:150px;">
-                <?php 
-                foreach ($this->departments as $key => $value)
-                {
-                ?>
-                    <option <?php if ($key == $this->admin['department_id']) { echo "selected"; } ?> value="<?php echo $key; ?>" ><?php echo $value; ?></option>
-                <?php
-                }
-                ?>
+            <div class="form-group">
+              <label class="control-label col-lg-4">用户组</label>
+              <div class="col-lg-4">
+                <select name="department_id" id="department_id" class="form-control">
+                    <option value="0">请选择</option>
+                    <?php 
+                    foreach ($this->departments as $department_id => $department_name)
+                    {
+                    ?>
+                    <option <?php if ($department_id == $this->admin['department_id']){ echo "selected='selected'"; }?> value="<?php echo $department_id;?>"><?php echo $department_name;?></option>
+                    <?php 
+                    }
+                    ?>
                 </select>
+              </div>
             </div>
-    	</fieldset>
-        <?php 
-        if ($this->admin)
-        {
-        ?>
-        <legend>管理组权限 <input name="privs_all" value="1" type="checkbox" id="privs_all" /> 所有权限</legend>            
             
+        </div>
+      </div>
+    </div><!-- /.col-lg-12 -->
+
+<?php 
+if ($this->admin)
+{
+?>
+    <div class="col-lg-12">
+      <div class="box">
+        <header>
+          <div class="icons">
+            <i class="fa fa-check"></i>
+          </div>
+          <h5>
+              权限管理<input type="checkbox" id="privs_all" class="uniform top_menu">
+                    
+          </h5>
+        </header>
+        <div class="body form-horizontal">
             <?php 
             foreach ($this->menus as $top_menu)
             {
             ?>
-                <fieldset style="border:1px solid #CCC;">
-                <legend>
-                    <?php echo $top_menu['menu_info']['menu_name'];?> &nbsp;
-                    <input type="checkbox" class="top_menu" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" /> 全选
-                </legend>
-                <?php 
+            <div class="col-lg-12">
+                <div class="box">
+                  <header>
+                    <div class="icons">
+                      <i class="fa fa-check"></i>
+                    </div>
+                    <h5><?php echo $top_menu['menu_info']['menu_name'];?>
+                        <input type="checkbox" top_id="<?php echo $top_menu['menu_info']['menu_id'];?>" class="uniform top_menu">
+                    </h5>
+                    <div class="toolbar">
+                      <div class="checker">
+                          <span class="checked"></span>
+                      </div>
+                    </div>
+                  </header>
+                    <?php 
                     foreach ((array) $top_menu['sub_menus'] as $second_menu)
                     {
-                ?>
-                        <fieldset class="controlset" style="border:1px dotted #DDD;">
-                        <legend class="label"><?php echo $second_menu['menu_info']['menu_name']; ?></legend>
+                    ?>
+                    <div class="form-group">
+                      <label class="control-label col-lg-2"><?php echo $second_menu['menu_info']['menu_name']; ?></label>
+                      <div class="col-lg-10">
                         <?php 
                         foreach ((array) $second_menu['sub_menus'] as $menu)
                         {
                         ?>
-                            <input name="menu_ids[]" <?php if (isset($this->admin_auth_options[$menu['menu_id']])){ echo "checked='checked'";}?>  <?php if (isset($this->department_auth_options[$menu['menu_id']])){ echo "checked='checked' disabled='disabled'"; } else{ echo "class='top_menu_{$top_menu['menu_info']['menu_id']} menu'"; }?>  value="<?php echo $menu['menu_id'];?>" type="checkbox" /><span><?php echo $menu['menu_name'];?></span>
+                        <div class="checkbox pull-left  <?php if (isset($this->department_auth_options[$menu['menu_id']])){ echo 'disabled';} ?>">
+                          <label>
+                            <div class="checker">
+                                <span class="checked">
+                                    <input type="checkbox" name="menu_ids[]" <?php if (isset($this->admin_auth_options[$menu['menu_id']])){ echo "checked='checked'";}?> value="<?php echo $menu['menu_id'];?>" <?php if (isset($this->department_auth_options[$menu['menu_id']])){ echo "checked='checked' disabled='disabled'"; } else{ echo "class='top_menu_{$top_menu['menu_info']['menu_id']} menu'"; }?> class="uniform">
+                                </span>
+                            </div> 
+                            <?php echo $menu['menu_name'];?>
+                          </label>
+                        </div>
                         <?php 
                         }
                         ?>
-                         </fieldset>
-                <?php 
+                      </div>
+                    </div><!-- /.row -->
+                    <?php 
                     }
-                ?>   
-                </fieldset>
-        <?php 
+                    ?>
+                </div>
+            </div>
+            <?php 
             }
-        }
-        ?>
-
-    	<div class="buttonrow">
-    		<input type="submit" value="提交" class="button" />&nbsp;&nbsp;
-            <input type="button" value="取消" class="button" onclick="history.go(-1);" />
-    	</div>
-	</form>
+            ?>
+            <div style="clear:both;height: 1px;">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+<?php 
+}
+?>
+    <div class="form-actions no-margin-bottom text-center form-group">
+        <input type="submit" value="提交" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" value="返回" onclick="history.go(-1);" class="btn btn-default">
+    </div>
+</form>
 </div>
+
+
 <script type="text/javascript">
 jQuery(document).ready(function(){
     jQuery('#privs_all').click(function(){
@@ -102,6 +159,3 @@ jQuery(document).ready(function(){
     });
 });
 </script>
-</body>
-</html>
- 
