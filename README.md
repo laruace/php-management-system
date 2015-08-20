@@ -2,6 +2,7 @@
 基于star Framework , bootstrap 的后台管理系统， 包含菜单管理、用户和用户组管理、权限管理
 
 #DEMO: http://demo.xiayoo.cn
+注意：菜单和权限编辑，需要重新登录才有效果
 ```
 超级管理员  
 用户名： admin 密码: 123456
