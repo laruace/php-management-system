@@ -1,6 +1,10 @@
 # php-management-system
 基于star Framework , bootstrap 的后台管理系统， 包含菜单管理、用户和用户组管理、权限管理
-
+DEMO: http://demo.xiayoo.cn
+超级管理员  
+用户名： admin 密码: 123456
+普通管理员
+用户名：  demo  密码： 123456
 #环境要求
 1.php5以上版本
 2.安装mysqli模块
