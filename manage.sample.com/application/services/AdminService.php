@@ -17,11 +17,7 @@ class AdminService {
     
     protected $auth_model;
 
-    protected $token = '0d0092b17bee7884134858f6e6ba68cf'; //管理员登陆验签串
-    
-    protected $auth_token = '3862d8552919eaafa6e84c4af2afa5b6'; //权限验签串
-    
-    protected $captcha_token = '1798cd647fed815a8a6dde78dee47589'; //验证码token
+    protected $token = '3862d8552919eaafa6e84c4af2afa5b6'; //验签串
 
     /**
      * 构造函数 
@@ -31,6 +27,11 @@ class AdminService {
         $this->admin_menu_model = new AdminMenuModel();
         $this->department_model = new AdminDepartmentModel();
         $this->auth_model = new AuthModel();
+        $token = Star_Config::get('resources.token');
+        if ($token)
+        {
+            $this->token = $token;
+        }
     }
     
     public function adminLogin($username, $admin_name = '', $remember = false)
@@ -239,7 +240,7 @@ class AdminService {
     {
         $auth_list = (array) $auth_list;
         ksort($auth_list);
-        return sha1(md5(implode('', $auth_list) . $this->auth_token));
+        return sha1(md5(implode('', $auth_list) . $this->token));
     }
 
 
@@ -817,7 +818,7 @@ class AdminService {
     protected function encryptionCaptcha($captcha, $time)
     {
         $captcha = strtolower($captcha);
-        $captcha = md5(md5($captcha . sha1($this->captcha_token) . $time));
+        $captcha = md5(md5($captcha . sha1($this->token) . $time));
         return $captcha;
     }
 

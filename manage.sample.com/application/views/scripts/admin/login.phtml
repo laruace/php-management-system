@@ -75,6 +75,8 @@
   </body>
 <script type="text/javascript">
     jQuery(document).ready(function(){
+        jQuery('#username').focus();
+        
         jQuery('#btn_login').click(function(){
             var username = jQuery('#username').val();
             var password = jQuery('#password').val();
@@ -91,6 +93,7 @@
                         return window.location.reload();
                     } else{
                         jQuery('#err_message').text(data.message);
+                        jQuery('#password').val('').focus();
                         getCaptcha();
                     }
                 }
