@@ -872,6 +872,26 @@ class AdminService {
         $login_logs = $admin_login_model->getLoginLogByPage($page, $page_size, $params);
         return array('page' => $page_data, 'total' => $total, 'login_logs' => $login_logs);
     }
+    
+    public static function getCsrfToken()
+    {
+        $token = Star_Config::get('resources.token');
+        $ip = Star_Http_Request::getIp();
+        $user_agent = Star_Http_Request::getHttpAgent();
+        $temp_array = array($token, $ip, $user_agent);
+        sort($temp_array, SORT_STRING);
+        return md5(implode('', $temp_array));
+    }
+    
+    public static function checkCsrfToke($csrf_token)
+    {
+        if ($csrf_token == self::getCsrfToken())
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>

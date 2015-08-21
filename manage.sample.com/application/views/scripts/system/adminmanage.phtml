@@ -84,7 +84,7 @@
                                 <a href="/system/editadmin?admin_id=<?php echo $admin['admin_id'];?>">
                                    <i class="glyphicon glyphicon-edit"></i>编辑
                                 </a>
-                                <a href="/system/deleteadmin?admin_id=<?php echo $admin['admin_id'];?>">
+                                <a href="/system/deleteadmin?admin_id=<?php echo $admin['admin_id'];?>&csrf_token=<?php echo $this->csrf_token;?>">
                                   <i class="glyphicon glyphicon-remove"></i>删除
                                 </a>
                             </td>

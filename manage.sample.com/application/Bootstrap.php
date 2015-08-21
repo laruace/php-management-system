@@ -37,6 +37,9 @@ class Bootstrap extends Star_Application_Bootstrap_Bootstrap
         }
 	}
     
+    /**
+     *  初始化layout
+     */
     protected function _initLayout()
     {
         Star_Layout::startMvc(array(
@@ -45,5 +48,13 @@ class Bootstrap extends Star_Application_Bootstrap_Bootstrap
 		));
     }
 	
+    /**
+     * 设置csrf_token
+     */
+    protected function _initCsrfToken()
+    {
+        $csrf_token = AdminService::getCsrfToken();
+        $this->view->assign('csrf_token', $csrf_token);
+    }
 }
 

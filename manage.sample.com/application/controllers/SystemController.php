@@ -153,6 +153,13 @@ class SystemController extends Star_Controller_Action
     {
         $request = $this->getRequest();
         $department_id = (int) $request->getParam('department_id');
+        $csrf_token = $request->getParam('csrf_token');
+        
+        if (AdminService::checkCsrfToke($csrf_token) == false)
+        {
+            return $this->showWarning('非法操作');
+        }
+        
         $admin_service = new AdminService();
         $department_info = $admin_service->getDepartmentById($department_id);
         
@@ -371,6 +378,12 @@ class SystemController extends Star_Controller_Action
     {
         $request = $this->getRequest();
         $admin_id = (int) $request->getParam('admin_id');
+        $csrf_token = $request->getParam('csrf_token');
+        
+        if (AdminService::checkCsrfToke($csrf_token) == false)
+        {
+            return $this->showWarning('非法操作');
+        }
         $admin_service = new AdminService();
         $admin_info = $admin_service->getAdminById($admin_id);
         if (empty($admin_info))
@@ -634,6 +647,12 @@ class SystemController extends Star_Controller_Action
     {
         $request = $this->getRequest();
         $menu_id = (int) $request->getParam('menu_id');
+        $csrf_token = $request->getParam('csrf_token');
+        
+        if (AdminService::checkCsrfToke($csrf_token) == false)
+        {
+            return $this->showWarning('非法操作');
+        }
         $admin_service = new AdminService();
         $menu_info = $admin_service->getMenuById($menu_id);
         if (empty($menu_info))
