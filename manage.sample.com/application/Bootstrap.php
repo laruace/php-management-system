@@ -24,6 +24,7 @@ class Bootstrap extends Star_Application_Bootstrap_Bootstrap
         {
             return header('Location: /admin/login');
         }
+        return ;
         if ($admin_service->checkAuth($controller, $action) == false)
         {
             if ($this->request->isAjax())

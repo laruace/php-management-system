@@ -32,6 +32,7 @@
     ?>
     <!--jQuery -->
     <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/moment/moment.min.js"></script>
  </head>
  <body style="margin:0 auto; padding: 0px;">
  <div class="dk" id="wrap" style="margin:0px;padding-left: 10px; padding-right: 10px; overflow: hidden;">
@@ -42,7 +43,6 @@
     echo $this->loadJs();
 ?>
 </div>
-</body>
 <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/less/less.min.js"></script>
 <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap/js/bootstrap.min.js"></script>
 <!-- MetisMenu -->
@@ -51,7 +51,7 @@
 <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/screenfull/screenfull.min.js"></script>
 <!-- Metis core scripts -->
 <script type="text/javascript" src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/core.min.js"></script>
-<script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/moment/moment.min.js"></script>
+<script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/js/app.min.js"></script>
 <script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/bootstrap-datepicker.min.js"></script>
 <script src="<?php echo $this->getStaticBasePath();?>/<?php echo $this->getStaticVersion();?>/manage/libs/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
@@ -65,4 +65,5 @@
         });
     });
 </script>
+</body>
 </html>
