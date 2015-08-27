@@ -1,4 +1,4 @@
 <script type="text/javascript">
     alert('<?php echo $this->message; ?>');
-        <?php if ($this->url) {?>location.href=<?php echo "'". $this->url . "'";  }else { ?>history.go(-1);<?php } ?>;
+        <?php if ($this->url) {?>location.href=<?php echo "'". $this->url . "'";  }else { ?>location.href="<?php echo $_SERVER['HTTP_REFERER'];?>";<?php } ?>;
 </script>
